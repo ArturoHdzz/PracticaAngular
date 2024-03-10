@@ -1,0 +1,55 @@
+<nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Tienda Bicicletas</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Tablas</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/home">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/catalogos">Catalogos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/compras">Compras</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/detallecompras">Detalle Compras</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/detallepedidos">Detalle Pedidos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/favoritos">Favoritos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/items">Items</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/metodopagos">Metodo Pagos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/modelos">Modelos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/pedidos">Pedidos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/resenas">Reseñas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/users">Usuarios</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <router-outlet></router-outlet>

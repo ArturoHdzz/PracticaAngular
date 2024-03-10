@@ -16,5 +16,7 @@ export const routes: Routes = [
     { path: 'pedidos', loadComponent:() => import('./bicicletas/pedidos/pedidos.component').then((c) => c.PedidosComponent) },
     { path: 'resenas', loadComponent:() => import('./bicicletas/resenas/resenas.component').then((c) => c.ResenasComponent) },
     { path: 'users', loadComponent:() => import('./bicicletas/users/users.component').then((c) => c.UsersComponent)},
+    { path: 'codigo', loadComponent:() => import('./bicicletas/codigo/codigo.component').then((c) => c.CodigoComponent) },
+    { path: 'layout', loadComponent:() => import('./bicicletas/layout/layout.component').then((c) => c.LayoutComponent) },
     { path: '**', loadComponent:() => import('./bicicletas/login/login.component').then((c) => c.LoginComponent), pathMatch: 'full' }
 ];
