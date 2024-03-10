@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import path from 'path';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
     { path: 'login', loadComponent:() => import('./bicicletas/login/login.component').then((c) => c.LoginComponent) },
@@ -19,6 +20,6 @@ export const routes: Routes = [
         { path: 'resenas', loadComponent:() => import('./bicicletas/resenas/resenas.component').then((c) => c.ResenasComponent) },
         { path: 'users', loadComponent:() => import('./bicicletas/users/users.component').then((c) => c.UsersComponent)},
         { path: '**', loadComponent:() => import('./bicicletas/home/home.component').then((c) => c.HomeComponent), pathMatch: 'full' }
-    ]},
+    ], canActivate: [authGuard]},
     { path: '**', loadComponent:() => import('./bicicletas/login/login.component').then((c) => c.LoginComponent), pathMatch: 'full' }
 ];
