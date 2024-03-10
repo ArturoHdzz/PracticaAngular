@@ -1,29 +1,55 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { ModelComponent } from '../../shared/ui/model/model.component';
+import { UserFormComponent } from './users-form/user-form/user-form.component';
+import { UsersService } from '../../services/users.service';
+import { IUser } from '../../shared/models/User';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ModelComponent, UserFormComponent],
   templateUrl: './users.component.html',
   styleUrl: './users.component.css'
 })
-export class UsersComponent {
-  @Output() onCloseModel = new EventEmitter();
+export class UsersComponent implements OnInit{
+  isModelOpen = false;
+  users: IUser[]=[];
+  user!:IUser;
+  constructor(private userService: UsersService, private toastService: ToastrService){}
 
-  constructor(private fb: FormBuilder){}
-
-  onClose(){
-    this.onCloseModel.emit(false);
+  ngOnInit(): void {
+    this.getAllUser();
   }
-}
-export interface ApiResponse<T>{
-  message?: string;
-  data: T;
-}
-export interface IUser{
-  _id?: string;
-  name: string;
-  email: string;
 
+  getAllUser(){
+    this.userService.getAllUser().subscribe({
+      next:(response)=>{
+        this.users = response.data;
+      }
+    })
+  }
+
+  deleteUser(id: string){
+    this.userService.deleteUser(id).subscribe({
+      next:(response)=>{
+        this.toastService.success(response.message);
+        this.getAllUser(); 
+      }
+    })
+  }
+
+  loadUser(data: IUser){
+    this.user = data;
+    this.openModel();
+  }
+
+  openModel(){
+    this.isModelOpen = true;
+  }
+  
+  closeModel(){
+    this.isModelOpen = false;
+    this.getAllUser();
+  }
 }

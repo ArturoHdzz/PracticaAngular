@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ApiResponse, IUser } from '../bicicletas/users/users.component';
+import { ApiResponse, IUser } from '../shared/models/User';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +28,7 @@ export class UsersService {
     return this.http.put<ApiResponse<IUser>>(`${this.apiurl}/${id}`, user)
   }
 
-  deleteUser(id: string): Observable<any>{
-    return this.http.delete(`${this.apiurl}/${id}`)
+  deleteUser(id: string): Observable<ApiResponse<IUser>>{
+    return this.http.delete<ApiResponse<IUser>>(`${this.apiurl}/${id}`)
   }
 }
