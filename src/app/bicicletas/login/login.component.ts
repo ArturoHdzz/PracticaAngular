@@ -22,6 +22,7 @@ export class LoginComponent {
     this.http.post('', this.loginObj).subscribe((res:any)=>{
       if(res.result){
         alert("Inicio de sesion Exitosamente")
+        localStorage.setItem('token', res.data.token)
         this.router. navigateByUrl('/codigo')
       }else{
         alert(res.message)
