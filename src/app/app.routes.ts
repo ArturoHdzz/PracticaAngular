@@ -20,6 +20,6 @@ export const routes: Routes = [
         { path: 'resenas', loadComponent:() => import('./bicicletas/resenas/resenas.component').then((c) => c.ResenasComponent) },
         { path: 'users', loadComponent:() => import('./bicicletas/users/users.component').then((c) => c.UsersComponent)},
         { path: '**', loadComponent:() => import('./bicicletas/home/home.component').then((c) => c.HomeComponent), pathMatch: 'full' }
-    ], canActivate: [authGuard]},
+    ]/*, canActivate: [authGuard]*/},
     { path: '**', loadComponent:() => import('./bicicletas/login/login.component').then((c) => c.LoginComponent), pathMatch: 'full' }
 ];
