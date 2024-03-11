@@ -20,6 +20,7 @@ export class UserFormComponent implements OnChanges {
     this.userForm = this.fb.group({
       name: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required]),
       role_id: new FormControl('', [Validators.required]),
     });
   }
@@ -29,6 +30,7 @@ export class UserFormComponent implements OnChanges {
       this.userForm.patchValue({
         name: this.data?.name,
         email: this.data?.email,
+        password: this.data?.password,
         role_id: this.data?.role_id,
       });
     }
@@ -58,6 +60,5 @@ export class UserFormComponent implements OnChanges {
     }else{
       this.userForm.markAllAsTouched();
     }
-
   }
 }

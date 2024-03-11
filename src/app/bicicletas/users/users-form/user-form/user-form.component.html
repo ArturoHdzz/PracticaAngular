@@ -15,6 +15,13 @@
     }
   </div>
   <div class="mb-5">
+    <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password Address</label>
+    <input type="password" id="password" class="form-control" placeholder="Password" formControlName="password">
+    @if (userForm.get('password')?.hasError('required') && userForm.get('password')?.touched) {
+    <div class="form-error">Password is required</div>
+    }
+  </div>
+  <div class="mb-5">
     <label for="role_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">rol</label>
     <input type="text" id="role_id" class="form-control" placeholder="role_id" formControlName="role_id">
     @if (userForm.get('role_id')?.hasError('required') && userForm.get('role_id')?.touched) {
