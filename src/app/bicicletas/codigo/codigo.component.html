@@ -1,1 +1,18 @@
-<p>codigo works!</p>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card shadow">
+          <div class="card-body">
+            <h4 class="card-title text-center mb-4">Ingrese un código de 6 dígitos</h4>
+            <form>
+              <div class="form-group">
+                <input type="text" class="form-control" id="codigo" placeholder="Código" maxlength="6" pattern="\d{6}" [(ngModel)]="codigoObj.verification_code" name="verification_code" required>
+                <small class="form-text text-muted">Ingresa un código de exactamente 6 dígitos.</small>
+              </div>
+              <button type="submit" class="btn btn-primary btn-block" (click)="onCodigo()">Enviar</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

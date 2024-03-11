@@ -8,27 +8,31 @@ import { ApiResponse, IUser } from '../shared/models/User';
 })
 export class UsersService {
 
-  apiurl = "";
+  todos = "http://127.0.0.1:8000/api/auth/user";
+  uno = "http://127.0.0.1:8000/api/auth/user";
+  crear = "http://127.0.0.1:8000/api/auth/user";
+  actualizar = "http://127.0.0.1:8000/api/auth/user";
+  eliminar = "http://127.0.0.1:8000/api/auth/user";
 
   constructor(private http: HttpClient) { }
 
   getAllUser(): Observable<ApiResponse<IUser[]>>{
-    return this.http.get<ApiResponse<IUser[]>>(`${this.apiurl}`)
+    return this.http.get<ApiResponse<IUser[]>>(`${this.todos}`)
   }
 
   getUser(id: string): Observable<ApiResponse<IUser>>{
-    return this.http.get<ApiResponse<IUser>>(`${this.apiurl}/${id}`)
+    return this.http.get<ApiResponse<IUser>>(`${this.uno}/${id}`)
   }
 
   createUser(user: IUser): Observable<ApiResponse<IUser>>{
-    return this.http.post<ApiResponse<IUser>>(`${this.apiurl}`, user)
+    return this.http.post<ApiResponse<IUser>>(`${this.crear}`, user)
   }
 
   updateUser(id: string, user: IUser){
-    return this.http.put<ApiResponse<IUser>>(`${this.apiurl}/${id}`, user)
+    return this.http.put<ApiResponse<IUser>>(`${this.actualizar}/${id}`, user)
   }
 
   deleteUser(id: string): Observable<ApiResponse<IUser>>{
-    return this.http.delete<ApiResponse<IUser>>(`${this.apiurl}/${id}`)
+    return this.http.delete<ApiResponse<IUser>>(`${this.eliminar}/${id}`)
   }
 }

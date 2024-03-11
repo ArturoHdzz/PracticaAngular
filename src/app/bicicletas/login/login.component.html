@@ -9,14 +9,14 @@
               <form>
                 <div class="mb-3">
                   <label for="email" class="form-label">Correo electrónico</label>
-                  <input type="email" class="form-control" [(ngModel)]="loginObj.EmailId" name="EmailId">
+                  <input type="email" class="form-control" [(ngModel)]="loginObj.email" name="email" required>
                 </div>
                 <div class="mb-3">
                   <label for="password" class="form-label">Contraseña</label>
-                  <input type="password" class="form-control" [(ngModel)]="loginObj.Password" name="Password">
+                  <input type="password" class="form-control" [(ngModel)]="loginObj.password" name="password" required>
                 </div>
                 <div class="d-grid gap-2">
-                  <button type="submit" class="btn btn-primary" (click)="onLogin">Iniciar sesión</button>
+                  <button type="submit" class="btn btn-primary" (click)="onLogin()">Iniciar sesión</button>
                   <a routerLink="/register" class="btn btn-link">Crear cuenta</a>
                   <a routerLink="/layout/home" class="btn btn-link">Entrar como invitado</a>
                 </div>

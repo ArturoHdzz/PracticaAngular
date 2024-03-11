@@ -18,23 +18,21 @@ export class LoginComponent {
   }
 
   onLogin(){
-    debugger;
-    this.http.post('', this.loginObj).subscribe((res:any)=>{
+    this.http.post('http://127.0.0.1:8000/api/auth/login', this.loginObj).subscribe((res:any)=>{
       if(res.result){
         alert("Inicio de sesion Exitosamente")
-        localStorage.setItem('token', res.data.token)
         this.router. navigateByUrl('/codigo')
       }else{
-        alert(res.message)
+        alert("Acceso no autorizado o campos invalidos")
       }
     })
   }
 }
 export class Login{
-  EmailId: string;
-  Password: string;
+  email: string;
+  password: string;
   constructor(){
-    this.EmailId='';
-    this.Password='';
+    this.email='';
+    this.password='';
   }
 }
