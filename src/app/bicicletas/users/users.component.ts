@@ -4,11 +4,12 @@ import { UserFormComponent } from './users-form/user-form/user-form.component';
 import { UsersService } from '../../services/users.service';
 import { IUser } from '../../shared/models/User';
 import { ToastrService } from 'ngx-toastr';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [ModelComponent, UserFormComponent],
+  imports: [ModelComponent, UserFormComponent, CommonModule],
   templateUrl: './users.component.html',
   styleUrl: './users.component.css'
 })

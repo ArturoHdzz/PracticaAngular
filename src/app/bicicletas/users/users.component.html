@@ -1,56 +1,39 @@
-<div class="flex justify-between items-center mb-6">
-    <h4 class="font-bold text-2xl"></h4>
+<div class="container mt-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="font-weight-bold text-2xl"></h4>
     <button type="button" (click)="openModel()"
-      class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none font-medium rounded-full px-6 py-3 text-center mb-2 ">Add
-      User</button>
+      class="btn btn-primary font-weight-medium rounded-pill px-4 py-2">Add User</button>
   </div>
-  <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-      <caption
-        class="p-5 text-lg font-semibold text-left rtl:text-right text-gray-900 bg-white dark:text-white dark:bg-gray-800">
-        Users
-      </caption>
-      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+  <div class="table-responsive shadow-sm rounded-lg">
+    <h1 class="p-3 h4 font-weight-bold text-left text-white bg-primary">
+      Users
+    </h1>
+    <table class="table table-sm table-bordered text-left">
+      <thead class="thead-light">
         <tr>
-          <th scope="col" class="px-6 py-3">
-            Name
-          </th>
-          <th scope="col" class="px-6 py-3">
-            Email
-          </th>
-          <th scope="col" class="px-6 py-3">
-            Rol
-          </th>
-          <th scope="col" class="px-6 py-3">
-            <span class="sr-only">Edit</span>
-          </th>
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Rol</th>
+          <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
-        @for (item of users; track $index) {
-        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-            {{item.name}}
-          </th>
-          <td class="px-6 py-4">
-            {{item.email}}
-          </td>
-          <td class="px-6 py-4">
-            {{item.role_id}}
-          </td>
-          <td class="px-6 py-4 text-right">
+        <tr *ngFor="let item of users; let i = index" class="bg-white border-bottom">
+          <td class="font-weight-medium">{{ item.name }}</td>
+          <td>{{ item.email }}</td>
+          <td>{{ item.role_id }}</td>
+          <td class="text-right">
             <button type="button" (click)="item._id && loadUser(item)"
-              class="font-medium text-blue-600 dark:text-blue-500 hover:underline mr-4">Edit</button>
+              class="btn btn-outline-primary btn-sm mr-2">Edit</button>
             <button type="button" (click)="item._id && deleteUser(item._id)"
-              class="font-medium text-red-600 dark:text-red-500 hover:underline">Delete</button>
+              class="btn btn-outline-danger btn-sm">Delete</button>
           </td>
         </tr>
-        }
       </tbody>
     </table>
   </div>
-  
-  
-  <app-model [isOpen]="isModelOpen" (closeModel)="closeModel()">
-    <app-user-form (onCloseModel)="closeModel()" [data]="user"></app-user-form>
-  </app-model>
+</div>
+
+<app-model [isOpen]="isModelOpen" (closeModel)="closeModel()">
+  <app-user-form (onCloseModel)="closeModel()" [data]="user"></app-user-form>
+</app-model>
