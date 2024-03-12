@@ -17,6 +17,8 @@ export class UserFormComponent implements OnChanges {
   @Output() onCloseModel = new EventEmitter();
   userForm: FormGroup;
 
+  private initialFormState: any;
+
   constructor(private fb: FormBuilder, private userService: UsersService, private toastService: ToastrService){
     this.userForm = this.fb.group({
       name: new FormControl('', [Validators.required]),
@@ -24,6 +26,7 @@ export class UserFormComponent implements OnChanges {
       password: new FormControl('', [Validators.required]),
       role_id: new FormControl('', [Validators.required]),
     });
+    this.initialFormState = this.userForm.value;
   }
 
   ngOnChanges(): void {
@@ -38,6 +41,7 @@ export class UserFormComponent implements OnChanges {
   }
 
   onClose(){
+    this.userForm.setValue(this.initialFormState);
     this.onCloseModel.emit(false);
   }
 

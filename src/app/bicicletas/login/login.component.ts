@@ -18,6 +18,7 @@ export class LoginComponent {
   }
 
   onLogin(){
+    debugger;
     this.http.post('http://127.0.0.1:8000/api/auth/login', this.loginObj).subscribe((res:any)=>{
       if(res.result){
         alert("Inicio de sesion Exitosamente")
