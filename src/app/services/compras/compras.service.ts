@@ -12,23 +12,23 @@ export class ComprasService {
 
   constructor(private http: HttpClient) { }
 
-  getAllUser(): Observable<ApiResponse<ICompra[]>>{
+  getAllCompra(): Observable<ApiResponse<ICompra[]>>{
     return this.http.get<ApiResponse<ICompra[]>>(`${this.todos}`)
   }
 
-  getUser(id: string): Observable<ApiResponse<ICompra>>{
+  getCompra(id: string): Observable<ApiResponse<ICompra>>{
     return this.http.get<ApiResponse<ICompra>>(`${this.todos}/${id}`)
   }
 
-  createUser(compra: ICompra): Observable<ApiResponse<ICompra>>{
+  createCompra(compra: ICompra): Observable<ApiResponse<ICompra>>{
     return this.http.post<ApiResponse<ICompra>>(`${this.todos}`, compra)
   }
 
-  updateUser(id: string, compra: ICompra){
+  updateCompra(id: string, compra: ICompra){
     return this.http.put<ApiResponse<ICompra>>(`${this.todos}/${id}`, compra)
   }
 
-  deleteUser(id: string): Observable<ApiResponse<ICompra>>{
+  deleteCompra(id: string): Observable<ApiResponse<ICompra>>{
     return this.http.delete<ApiResponse<ICompra>>(`${this.todos}/${id}`)
   }
 }
