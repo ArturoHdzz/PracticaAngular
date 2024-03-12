@@ -3,7 +3,7 @@ export interface ApiResponse<T>{
     data: T;
   }
   export interface IUser{
-    _id?: string;
+    id?: string;
     name: string;
     email: string;
     password: string;

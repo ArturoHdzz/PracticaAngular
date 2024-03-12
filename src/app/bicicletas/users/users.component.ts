@@ -31,13 +31,19 @@ export class UsersComponent implements OnInit{
     })
   }
 
-  deleteUser(id: string){
-    this.userService.deleteUser(id).subscribe({
-      next:(response)=>{
-        this.toastService.success(response.message);
-        this.getAllUser(); 
-      }
-    })
+  deleteUser(id: string) {
+    console.log("Deleting user with ID:", id);
+    if (confirm("¿Estás seguro de eliminar este usuario?")) {
+      this.userService.deleteUser(id).subscribe({
+        next: (response) => {
+          this.toastService.success(response.message);
+          this.getAllUser();
+        },
+        error: (error) => {
+          this.toastService.error(error.message);
+        },
+      });
+    }
   }
 
   loadUser(data: IUser){

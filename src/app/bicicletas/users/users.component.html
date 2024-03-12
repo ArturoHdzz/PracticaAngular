@@ -23,9 +23,9 @@
           <td>{{ item.email }}</td>
           <td>{{ item.role_id }}</td>
           <td class="text-right">
-            <button type="button" (click)="item._id && loadUser(item)"
+            <button type="button" (click)="loadUser(item)"
               class="btn btn-outline-primary btn-sm mr-2">Edit</button>
-            <button type="button" (click)="item._id && deleteUser(item._id)"
+            <button type="button" (click)="deleteUser(item.id!)"
               class="btn btn-outline-danger btn-sm">Delete</button>
           </td>
         </tr>

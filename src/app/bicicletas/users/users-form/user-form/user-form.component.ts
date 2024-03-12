@@ -44,7 +44,7 @@ export class UserFormComponent implements OnChanges {
   onSubmit(){
     if(this.userForm.valid){
       if(this.data){
-        this.userService.updateUser(this.data._id as string, this.userForm.value).subscribe({
+        this.userService.updateUser(this.data.id as string, this.userForm.value).subscribe({
           next:(response)=>{
             this.toastService.success(response.message)
             this.onClose();
