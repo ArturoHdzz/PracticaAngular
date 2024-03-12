@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ICatalogo } from '../../shared/models/Catalogo';
 import { ToastrService } from 'ngx-toastr';
 import { ModelComponent } from '../../shared/ui/model/model.component';
@@ -13,7 +13,7 @@ import { CatalogosService } from '../../services/catalogos/catalogos.service';
   templateUrl: './catalogos.component.html',
   styleUrl: './catalogos.component.css'
 })
-export class CatalogosComponent {
+export class CatalogosComponent implements OnInit{
   isModelOpen = false;
   catalogos: ICatalogo[]=[];
   catalogo!:ICatalogo;

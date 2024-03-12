@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { ICompra } from '../../../../shared/models/Campra';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ComprasService } from '../../../../services/compras/compras.service';
@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './compra-form.component.html',
   styleUrl: './compra-form.component.css'
 })
-export class CompraFormComponent {
+export class CompraFormComponent implements OnChanges{
   @Input() data: ICompra | null = null;
   @Output() onCloseModel = new EventEmitter();
   CompraForm: FormGroup;

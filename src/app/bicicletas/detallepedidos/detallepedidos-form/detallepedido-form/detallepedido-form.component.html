@@ -1,1 +1,25 @@
-<p>detallepedido-form works!</p>
+<h5 class="mb-5 text-lg font-bold tracking-tight text-gray-900">User Details</h5>
+<form [formGroup]="Form" class="w-100" (ngSubmit)="onSubmit()" novalidate>
+  <div class="mb-3">
+    <label for="pedido_id" class="form-label">Pedido</label>
+    <input type="text" id="pedido_id" class="form-control" placeholder="Pedido" formControlName="pedido_id">
+    <div *ngIf="Form.get('pedido_id')?.hasError('required') && Form.get('pedido_id')?.touched" class="form-text text-danger">Es required</div>
+  </div>
+  <div class="mb-3">
+    <label for="modelo_id" class="form-label">Modelo</label>
+    <input type="modelo_id" id="modelo_id" class="form-control" placeholder="Modelo" formControlName="modelo_id">
+    <div *ngIf="Form.get('modelo_id')?.hasError('required') && Form.get('modelo_id')?.touched" class="form-text text-danger">Es required</div>
+  </div>
+  <div class="mb-3">
+    <label for="cantidad" class="form-label">Cantidad</label>
+    <input type="text" id="cantidad" class="form-control" placeholder="Cantidad" formControlName="cantidad">
+    <div *ngIf="Form.get('cantidad')?.hasError('required') && Form.get('cantidad')?.touched" class="form-text text-danger">Es required</div>
+  </div>
+  <div class="mb-3">
+    <label for="precio" class="form-label">Precio</label>
+    <input type="precio" id="precio" class="form-control" placeholder="Precio" formControlName="precio">
+    <div *ngIf="Form.get('precio')?.hasError('required') && Form.get('precio')?.touched" class="form-text text-danger">Es required</div>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+  <button type="button" (click)="onClose()" class="btn btn-secondary ms-2">Cancel</button>
+</form>

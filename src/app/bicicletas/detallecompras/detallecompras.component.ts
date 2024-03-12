@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ModelComponent } from '../../shared/ui/model/model.component';
 import { CommonModule } from '@angular/common';
 import { IDetalleCompra } from '../../shared/models/DetalleCompra';
@@ -13,7 +13,7 @@ import { DetallecompraFormComponent } from './detallecompras-form/detallecompra-
   templateUrl: './detallecompras.component.html',
   styleUrl: './detallecompras.component.css'
 })
-export class DetallecomprasComponent {
+export class DetallecomprasComponent implements OnInit{
   isModelOpen = false;
   detalleCompras: IDetalleCompra[]=[];
   detalleCompra!:IDetalleCompra;

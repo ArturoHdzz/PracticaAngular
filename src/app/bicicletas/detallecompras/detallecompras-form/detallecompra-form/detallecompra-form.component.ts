@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { IDetalleCompra } from '../../../../shared/models/DetalleCompra';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DetallecomprasService } from '../../../../services/detallecompras/detallecompras.service';
@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './detallecompra-form.component.html',
   styleUrl: './detallecompra-form.component.css'
 })
-export class DetallecompraFormComponent {
+export class DetallecompraFormComponent implements OnChanges{
   @Input() data: IDetalleCompra | null = null;
   @Output() onCloseModel = new EventEmitter();
   Form: FormGroup;
