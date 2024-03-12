@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { UsersService } from '../../../../services/users.service';
+import { UsersService } from '../../../../services/users/users.service';
 import { IUser } from '../../../../shared/models/User';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';

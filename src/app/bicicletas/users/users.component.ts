@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModelComponent } from '../../shared/ui/model/model.component';
 import { UserFormComponent } from './users-form/user-form/user-form.component';
-import { UsersService } from '../../services/users.service';
+import { UsersService } from '../../services/users/users.service';
 import { IUser } from '../../shared/models/User';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
