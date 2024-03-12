@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UsersService } from '../../../../services/users/users.service';
-import { IUser } from '../../../../shared/models/User';
+import { IUser, IRole } from '../../../../shared/models/User';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 
@@ -16,6 +16,7 @@ export class UserFormComponent implements OnChanges {
   @Input() data: IUser | null = null;
   @Output() onCloseModel = new EventEmitter();
   userForm: FormGroup;
+  roles: IRole[] = [];
 
   private initialFormState: any;
 
@@ -29,13 +30,25 @@ export class UserFormComponent implements OnChanges {
     this.initialFormState = this.userForm.value;
   }
 
+  ngOnInit() {
+    this.getRoles(); 
+  }
+
+  getRoles(){
+    this.userService.getAllRoles().subscribe({
+      next:(response)=>{
+        this.roles = response.data;
+      }
+    });
+  }
+
   ngOnChanges(): void {
     if(this.data){
       this.userForm.patchValue({
         name: this.data?.name,
         email: this.data?.email,
         password: this.data?.password,
-        role_id: this.data?.role_id,
+        role_id: this.data?.role.id,
       });
     }
   }

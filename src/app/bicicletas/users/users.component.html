@@ -21,7 +21,7 @@
         <tr *ngFor="let item of users; let i = index" class="bg-white border-bottom">
           <td class="font-weight-medium">{{ item.name }}</td>
           <td>{{ item.email }}</td>
-          <td>{{ item.role_id }}</td>
+          <td>{{ item.role.name }}</td>
           <td class="text-right">
             <button type="button" (click)="loadUser(item)"
               class="btn btn-outline-primary btn-sm mr-2">Edit</button>

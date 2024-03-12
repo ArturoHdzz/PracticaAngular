@@ -2,10 +2,18 @@ export interface ApiResponse<T>{
     message?: string;
     data: T;
   }
-  export interface IUser{
+
+export interface IRole{
+    id?: string;
+    name: string;
+    created_at?: string;
+    updated_at?: string;
+  }
+
+  export interface IUser {
     id?: string;
     name: string;
     email: string;
     password: string;
-    role_id: string;
+    role: IRole;
   }

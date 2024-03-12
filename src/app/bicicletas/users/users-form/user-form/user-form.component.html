@@ -17,8 +17,10 @@
   </div>
   <div class="mb-3">
     <label for="role_id" class="form-label">Role</label>
-    <input type="text" id="role_id" class="form-control" placeholder="Role ID" formControlName="role_id">
-    <div *ngIf="userForm.get('role_id')?.hasError('required') && userForm.get('role_id')?.touched" class="form-text text-danger">Role ID is required</div>
+    <select id="role_id" class="form-control" formControlName="role_id">
+      <option *ngFor="let role of roles" [value]="role.id">{{ role.name }}</option>
+    </select>
+    <div *ngIf="userForm.get('role_id')?.hasError('required') && userForm.get('role_id')?.touched" class="form-text text-danger">Role is required</div>
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
   <button type="button" (click)="onClose()" class="btn btn-secondary ms-2">Cancel</button>
