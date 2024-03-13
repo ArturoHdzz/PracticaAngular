@@ -5,10 +5,10 @@
     <select id="compra_id" class="form-control" formControlName="compra_id">
       <option *ngFor="let compra of compras" [value]="compra.id">{{ compra.id }}</option>
     </select>
-    <div *ngIf="Form.get('compra_id')?.hasError('required') && Form.get('compra_id')?.touched" class="form-text text-danger">Es required</div>
+    <div *ngIf="Form.get('compra_id')?.hasError('required') && Form.get('compra_id')?.touched" class="form-text text-danger">Compra is required</div>
   </div>
   <div class="mb-3">
-    <label for="modelo_id" class="form-label">Modelo</label>
+    <label for="modelo_id" class="form-label">Modelo </label>
     <select id="modelo_id" class="form-control" formControlName="modelo_id">
       <option *ngFor="let modelo of modelos" [value]="modelo.id">{{ modelo.nombre }}</option>
     </select>
