@@ -1,1 +1,20 @@
-<p>metodopago-form works!</p>
+<h5 class="mb-5 text-lg font-bold tracking-tight text-gray-900">Metodo de pago Details</h5>
+<form [formGroup]="Form" class="w-100" (ngSubmit)="onSubmit()" novalidate>
+  <div class="mb-3">
+    <label for="nombre" class="form-label">Nombre</label>
+    <input type="text" id="nombre" class="form-control" placeholder="Nombre" formControlName="nombre">
+    <div *ngIf="Form.get('nombre')?.hasError('required') && Form.get('nombre')?.touched" class="form-text text-danger">Es required</div>
+  </div>
+  <div class="mb-3">
+    <label for="descripcion" class="form-label">Descripcion</label>
+    <input type="descripcion" id="descripcion" class="form-control" placeholder="Descripcion" formControlName="descripcion">
+    <div *ngIf="Form.get('descripcion')?.hasError('required') && Form.get('descripcion')?.touched" class="form-text text-danger">Es required</div>
+  </div>
+  <div class="mb-3">
+    <label for="tipo" class="form-label">Tipo</label>
+    <input type="text" id="tipo" class="form-control" placeholder="Tipo" formControlName="tipo">
+    <div *ngIf="Form.get('tipo')?.hasError('required') && Form.get('tipo')?.touched" class="form-text text-danger">Es required</div>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+  <button type="button" (click)="onClose()" class="btn btn-secondary ms-2">Cancel</button>
+</form>

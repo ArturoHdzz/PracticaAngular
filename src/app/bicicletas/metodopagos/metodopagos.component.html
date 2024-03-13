@@ -1,1 +1,40 @@
-<p>metodopagos works!</p>
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h4 class="font-weight-bold text-2xl"></h4>
+      <button type="button" (click)="openModel()"
+        class="btn btn-primary font-weight-medium rounded-pill px-4 py-2">Add Metodo de pago</button>
+    </div>
+    <div class="table-responsive shadow-sm rounded-lg">
+      <h1 class="p-3 h4 font-weight-bold text-left text-white bg-primary">
+        Metodo de pago
+      </h1>
+      <table class="table table-sm table-bordered text-left">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Descripcion</th>
+            <th scope="col">Tipo</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of datos; let i = index" class="bg-white border-bottom">
+            <td class="font-weight-medium">{{ item.nombre }}</td>
+            <td>{{ item.descripcion }}</td>
+            <td>{{ item.tipo }}</td>
+            <td class="text-right">
+              <button type="button" (click)="loadUser(item)"
+                class="btn btn-outline-primary btn-sm mr-2">Edit</button>
+              <button type="button" (click)="deleteUser(item.id!)"
+                class="btn btn-outline-danger btn-sm">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  <app-model [isOpen]="isModelOpen" (closeModel)="closeModel()">
+    <app-metodopago-form (onCloseModel)="closeModel()" [data]="dato"></app-metodopago-form>
+  </app-model>
+  

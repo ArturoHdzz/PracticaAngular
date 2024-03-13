@@ -2,7 +2,7 @@ export interface ApiResponse<T>{
     message?: string;
     data: T;
   }
-  export interface IUser{
+  export interface IMetodoPago{
     id?: string;
     nombre: string;
     descripcion: string;
