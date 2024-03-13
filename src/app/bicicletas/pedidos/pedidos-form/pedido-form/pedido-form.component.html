@@ -1,1 +1,30 @@
-<p>pedido-form works!</p>
+<h5 class="mb-5 text-lg font-bold tracking-tight text-gray-900">Pedido Details</h5>
+<form [formGroup]="Form" class="w-100" (ngSubmit)="onSubmit()" novalidate>
+  <div class="mb-3">
+    <label for="user_id" class="form-label">Usuario</label>
+    <input type="text" id="user_id" class="form-control" placeholder="Usuario" formControlName="user_id">
+    <div *ngIf="Form.get('user_id')?.hasError('required') && Form.get('user_id')?.touched" class="form-text text-danger">Es required</div>
+  </div>
+  <div class="mb-3">
+    <label for="metodo_pago_id" class="form-label">Metodo de pago</label>
+    <input type="metodo_pago_id" id="metodo_pago_id" class="form-control" placeholder="Metodo de pago" formControlName="metodo_pago_id">
+    <div *ngIf="Form.get('metodo_pago_id')?.hasError('required') && Form.get('metodo_pago_id')?.touched" class="form-text text-danger">Es required</div>
+  </div>
+  <div class="mb-3">
+    <label for="total" class="form-label">Total</label>
+    <input type="text" id="total" class="form-control" placeholder="Total" formControlName="total">
+    <div *ngIf="Form.get('total')?.hasError('required') && Form.get('total')?.touched" class="form-text text-danger">Es required</div>
+  </div>
+  <div class="mb-3">
+    <label for="fecha" class="form-label">Fecha</label>
+    <input type="text" id="fecha" class="form-control" placeholder="Fecha" formControlName="fecha">
+    <div *ngIf="Form.get('fecha')?.hasError('required') && Form.get('fecha')?.touched" class="form-text text-danger">Es required</div>
+  </div>
+  <div class="mb-3">
+    <label for="direccion" class="form-label">Direccion</label>
+    <input type="text" id="direccion" class="form-control" placeholder="Direccion" formControlName="direccion">
+    <div *ngIf="Form.get('direccion')?.hasError('required') && Form.get('direccion')?.touched" class="form-text text-danger">Es required</div>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+  <button type="button" (click)="onClose()" class="btn btn-secondary ms-2">Cancel</button>
+</form>

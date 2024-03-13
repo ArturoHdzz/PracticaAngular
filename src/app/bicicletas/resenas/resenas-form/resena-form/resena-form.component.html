@@ -1,1 +1,30 @@
-<p>resena-form works!</p>
+<h5 class="mb-5 text-lg font-bold tracking-tight text-gray-900">Metodo de pago Details</h5>
+<form [formGroup]="Form" class="w-100" (ngSubmit)="onSubmit()" novalidate>
+  <div class="mb-3">
+    <label for="user_id" class="form-label">Usuario</label>
+    <input type="text" id="user_id" class="form-control" placeholder="Usuario" formControlName="user_id">
+    <div *ngIf="Form.get('user_id')?.hasError('required') && Form.get('user_id')?.touched" class="form-text text-danger">Es required</div>
+  </div>
+  <div class="mb-3">
+    <label for="modelo_id" class="form-label">Modelo</label>
+    <input type="modelo_id" id="modelo_id" class="form-control" placeholder="Modelo" formControlName="modelo_id">
+    <div *ngIf="Form.get('modelo_id')?.hasError('required') && Form.get('modelo_id')?.touched" class="form-text text-danger">Es required</div>
+  </div>
+  <div class="mb-3">
+    <label for="comentario" class="form-label">Comentario</label>
+    <input type="text" id="comentario" class="form-control" placeholder="Comentario" formControlName="comentario">
+    <div *ngIf="Form.get('comentario')?.hasError('required') && Form.get('comentario')?.touched" class="form-text text-danger">Es required</div>
+  </div>
+  <div class="mb-3">
+    <label for="calificacion" class="form-label">Calificacion</label>
+    <input type="text" id="calificacion" class="form-control" placeholder="Calificacion" formControlName="calificacion">
+    <div *ngIf="Form.get('calificacion')?.hasError('required') && Form.get('calificacion')?.touched" class="form-text text-danger">Es required</div>
+  </div>
+  <div class="mb-3">
+    <label for="fecha" class="form-label">Fecha</label>
+    <input type="text" id="fecha" class="form-control" placeholder="Fecha" formControlName="fecha">
+    <div *ngIf="Form.get('fecha')?.hasError('required') && Form.get('fecha')?.touched" class="form-text text-danger">Es required</div>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+  <button type="button" (click)="onClose()" class="btn btn-secondary ms-2">Cancel</button>
+</form>

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ApiResponse, IUser } from '../../shared/models/User';
+import { ApiResponse, IUser, IRole } from '../../shared/models/User';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +9,7 @@ import { ApiResponse, IUser } from '../../shared/models/User';
 export class UsersService {
 
   todos = "http://127.0.0.1:8000/api/auth/user";
+  roles = "http://127.0.0.1:8000/api/auth/user/roles";
   uno = "http://127.0.0.1:8000/api/auth/user";
   crear = "http://127.0.0.1:8000/api/auth/user";
   actualizar = "http://127.0.0.1:8000/api/auth/user";
@@ -22,6 +23,10 @@ export class UsersService {
 
   getUser(id: string): Observable<ApiResponse<IUser>>{
     return this.http.get<ApiResponse<IUser>>(`${this.uno}/${id}`)
+  }
+
+  getAllRoles(): Observable<ApiResponse<IRole[]>>{
+    return this.http.get<ApiResponse<IRole[]>>(`${this.roles}`)
   }
 
   createUser(user: IUser): Observable<ApiResponse<IUser>>{

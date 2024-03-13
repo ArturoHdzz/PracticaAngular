@@ -2,7 +2,7 @@ export interface ApiResponse<T>{
     message?: string;
     data: T;
   }
-  export interface IUser{
+  export interface IDetalleCompra{
     id?: string;
     compra_id: string;
     modelo_id: string;
