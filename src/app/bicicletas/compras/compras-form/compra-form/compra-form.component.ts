@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
-import { ICompra } from '../../../../shared/models/Campra';
+import { ICompra, IUser, IMetodoPago } from '../../../../shared/models/Campra';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ComprasService } from '../../../../services/compras/compras.service';
 import { ToastrService } from 'ngx-toastr';
@@ -16,6 +16,8 @@ export class CompraFormComponent implements OnChanges{
   @Input() data: ICompra | null = null;
   @Output() onCloseModel = new EventEmitter();
   CompraForm: FormGroup;
+  users: IUser[] = [];
+  metodosPago: IMetodoPago[] = [];
 
   private initialFormState: any;
 
@@ -29,11 +31,32 @@ export class CompraFormComponent implements OnChanges{
     this.initialFormState = this.CompraForm.value;
   }
 
+  ngOnInit() {
+    this.getUsers();
+    this.getMetodosPago();
+  }
+
+  getUsers(){
+    this.compraService.getAllUser().subscribe({
+      next:(response)=>{
+        this.users = response.data;
+      }
+    });
+  }
+
+  getMetodosPago(){
+    this.compraService.getAllMetodoPago().subscribe({
+      next:(response)=>{
+        this.metodosPago = response.data;
+      }
+    });
+  }
+
   ngOnChanges(): void {
     if(this.data){
       this.CompraForm.patchValue({
-        user_id: this.data?.user_id,
-        metodo_pago_id: this.data?.metodo_pago_id,
+        user_id: this.data?.user.id,
+        metodo_pago_id: this.data?.metodo_pago.id,
         total: this.data?.total,
         fecha: this.data?.fecha,
       });

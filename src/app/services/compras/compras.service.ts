@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ApiResponse, ICompra } from '../../shared/models/Campra';
+import { ApiResponse, ICompra, IUser, IMetodoPago } from '../../shared/models/Campra';
 
 @Injectable({
   providedIn: 'root'
@@ -9,11 +9,21 @@ import { ApiResponse, ICompra } from '../../shared/models/Campra';
 export class ComprasService {
 
   todos = "http://127.0.0.1:8000/api/auth/compra";
+  user = "http://127.0.0.1:8000/api/auth/user";
+  metodo_pago = "http://127.0.0.1:8000/api/auth/metodopago";
 
   constructor(private http: HttpClient) { }
 
   getAllCompra(): Observable<ApiResponse<ICompra[]>>{
     return this.http.get<ApiResponse<ICompra[]>>(`${this.todos}`)
+  }
+
+  getAllMetodoPago(): Observable<ApiResponse<IMetodoPago[]>>{
+    return this.http.get<ApiResponse<IMetodoPago[]>>(`${this.metodo_pago}`)
+  }
+
+  getAllUser(): Observable<ApiResponse<IUser[]>>{
+    return this.http.get<ApiResponse<IUser[]>>(`${this.user}`)
   }
 
   getCompra(id: string): Observable<ApiResponse<ICompra>>{
