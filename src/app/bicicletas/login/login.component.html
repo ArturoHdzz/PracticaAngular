@@ -15,6 +15,7 @@
                   <label for="password" class="form-label">Contraseña</label>
                   <input type="password" class="form-control" [(ngModel)]="loginObj.password" name="password" required>
                 </div>
+                <div *ngIf="Error" class="text-danger" style="margin-bottom: 20px; font-weight: bold;">{{ Error }}</div>
                 <div class="d-grid gap-2">
                   <button type="submit" class="btn btn-primary" (click)="onLogin()">Iniciar sesión</button>
                   <a routerLink="/register" class="btn btn-link">Crear cuenta</a>
