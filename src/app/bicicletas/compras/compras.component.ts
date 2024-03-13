@@ -17,7 +17,7 @@ import { CompraFormComponent } from './compras-form/compra-form/compra-form.comp
 export class ComprasComponent implements OnInit {
   isModelOpen = false;
   compras: ICompra[]=[];
-  compra!:ICompra;
+  compra:ICompra | null = null;
   constructor(private compraService: ComprasService, private toastService: ToastrService){}
 
   ngOnInit(): void {
@@ -57,6 +57,7 @@ export class ComprasComponent implements OnInit {
   }
   
   closeModel(){
+    this.compra = null
     this.isModelOpen = false;
     this.getAllCompra();
   }

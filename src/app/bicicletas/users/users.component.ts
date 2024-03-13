@@ -16,7 +16,7 @@ import { CommonModule } from '@angular/common';
 export class UsersComponent implements OnInit{
   isModelOpen = false;
   users: IUser[]=[];
-  user!:IUser;
+  user:IUser | null = null;
   constructor(private userService: UsersService, private toastService: ToastrService){}
 
   ngOnInit(): void {
@@ -56,6 +56,7 @@ export class UsersComponent implements OnInit{
   }
   
   closeModel(){
+    this.user = null
     this.isModelOpen = false;
     this.getAllUser();
   }

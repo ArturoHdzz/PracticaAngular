@@ -16,7 +16,7 @@ import { ToastrService } from 'ngx-toastr';
 export class ResenasComponent implements OnInit{
   isModelOpen = false;
   datos: IResena[]=[];
-  dato!:IResena;
+  dato:IResena | null = null;
   constructor(private Service: ResenasService, private toastService: ToastrService){}
 
   ngOnInit(): void {
@@ -56,6 +56,7 @@ export class ResenasComponent implements OnInit{
   }
   
   closeModel(){
+    this.dato = null
     this.isModelOpen = false;
     this.getAll();
   }

@@ -16,7 +16,8 @@ import { CatalogosService } from '../../services/catalogos/catalogos.service';
 export class CatalogosComponent implements OnInit{
   isModelOpen = false;
   catalogos: ICatalogo[]=[];
-  catalogo!:ICatalogo;
+  catalogo:ICatalogo | null = null;
+
   constructor(private CatalogoService: CatalogosService, private toastService: ToastrService){}
 
   ngOnInit(): void {
@@ -56,6 +57,8 @@ export class CatalogosComponent implements OnInit{
   }
   
   closeModel(){
+
+    this.catalogo = null
     this.isModelOpen = false;
     this.getAllCatalogo();
   }

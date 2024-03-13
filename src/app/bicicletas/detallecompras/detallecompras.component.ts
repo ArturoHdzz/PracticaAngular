@@ -16,7 +16,7 @@ import { DetallecompraFormComponent } from './detallecompras-form/detallecompra-
 export class DetallecomprasComponent implements OnInit{
   isModelOpen = false;
   detalleCompras: IDetalleCompra[]=[];
-  detalleCompra!:IDetalleCompra;
+  detalleCompra:IDetalleCompra | null = null;
   constructor(private DetallecomprasService: DetallecomprasService, private toastService: ToastrService){}
 
   ngOnInit(): void {
@@ -56,6 +56,7 @@ export class DetallecomprasComponent implements OnInit{
   }
   
   closeModel(){
+    this.detalleCompra = null
     this.isModelOpen = false;
     this.getAll();
   }

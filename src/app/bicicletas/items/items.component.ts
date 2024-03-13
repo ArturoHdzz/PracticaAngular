@@ -16,7 +16,7 @@ import { ToastrService } from 'ngx-toastr';
 export class ItemsComponent implements OnInit {
   isModelOpen = false;
   datos: IItem[]=[];
-  dato!:IItem;
+  dato:IItem | null = null;
   constructor(private Service: ItemsService, private toastService: ToastrService){}
 
   ngOnInit(): void {
@@ -56,6 +56,7 @@ export class ItemsComponent implements OnInit {
   }
   
   closeModel(){
+    this.dato = null
     this.isModelOpen = false;
     this.getAll();
   }
