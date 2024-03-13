@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { IDetallePedido } from '../../shared/models/DetallePedido';
 import { DetallepedidosService } from '../../services/detallepedidos/detallepedidos.service';
 import { ToastrService } from 'ngx-toastr';
+import { isNull } from 'util';
 
 @Component({
   selector: 'app-detallepedidos',
@@ -16,7 +17,7 @@ import { ToastrService } from 'ngx-toastr';
 export class DetallepedidosComponent implements OnInit{
   isModelOpen = false;
   datos: IDetallePedido[]=[];
-  dato!:IDetallePedido;
+  dato:IDetallePedido | null = null;
   constructor(private Service: DetallepedidosService, private toastService: ToastrService){}
 
   ngOnInit(): void {
@@ -56,6 +57,7 @@ export class DetallepedidosComponent implements OnInit{
   }
   
   closeModel(){
+    this.dato = null
     this.isModelOpen = false;
     this.getAll();
   }

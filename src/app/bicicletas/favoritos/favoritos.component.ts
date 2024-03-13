@@ -16,7 +16,7 @@ import { ToastrService } from 'ngx-toastr';
 export class FavoritosComponent implements OnInit {
   isModelOpen = false;
   datos: IFavorito[]=[];
-  dato!:IFavorito;
+  dato:IFavorito | null = null;
   constructor(private Service: FavoritosService, private toastService: ToastrService){}
 
   ngOnInit(): void {
@@ -56,6 +56,7 @@ export class FavoritosComponent implements OnInit {
   }
   
   closeModel(){
+    this.dato = null
     this.isModelOpen = false;
     this.getAll();
   }
