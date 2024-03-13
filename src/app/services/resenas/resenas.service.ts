@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ApiResponse, IResena } from '../../shared/models/resenas';
+import { ApiResponse, IResena, IModelo, IUser } from '../../shared/models/resenas';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -9,11 +9,21 @@ import { Observable } from 'rxjs';
 export class ResenasService {
 
   todos = "http://127.0.0.1:8000/api/auth/reseña";
+  modelos = "http://127.0.0.1:8000/api/auth/modelo";
+  users = "http://127.0.0.1:8000/api/auth/user";
 
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<ApiResponse<IResena[]>>{
     return this.http.get<ApiResponse<IResena[]>>(`${this.todos}`)
+  }
+
+  getModelos(): Observable<ApiResponse<IModelo[]>>{
+    return this.http.get<ApiResponse<IModelo[]>>(`${this.modelos}`)
+  }
+
+  getUsers(): Observable<ApiResponse<IUser[]>>{
+    return this.http.get<ApiResponse<IUser[]>>(`${this.users}`)
   }
 
   get(id: string): Observable<ApiResponse<IResena>>{

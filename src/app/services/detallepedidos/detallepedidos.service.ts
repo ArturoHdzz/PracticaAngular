@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ApiResponse, IDetallePedido } from '../../shared/models/DetallePedido';
+import { ApiResponse, IDetallePedido, IModelo, IPedido } from '../../shared/models/DetallePedido';
 
 @Injectable({
   providedIn: 'root'
@@ -9,11 +9,21 @@ import { ApiResponse, IDetallePedido } from '../../shared/models/DetallePedido';
 export class DetallepedidosService {
 
   todos = "http://127.0.0.1:8000/api/auth/detallepedido";
+  pedidos = "http://127.0.0.1:8000/api/auth/pedido";
+  modelos = "http://127.0.0.1:8000/api/auth/modelo";
 
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<ApiResponse<IDetallePedido[]>>{
     return this.http.get<ApiResponse<IDetallePedido[]>>(`${this.todos}`)
+  }
+
+  getAllPedidos(): Observable<ApiResponse<IPedido[]>>{
+    return this.http.get<ApiResponse<IPedido[]>>(`${this.pedidos}`)
+  }
+
+  getAllModelos(): Observable<ApiResponse<IModelo[]>>{
+    return this.http.get<ApiResponse<IModelo[]>>(`${this.modelos}`)
   }
 
   get(id: string): Observable<ApiResponse<IDetallePedido>>{

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ApiResponse, IPedido } from '../../shared/models/Pedido';
+import { ApiResponse, IPedido, IUser, IMetodoPago } from '../../shared/models/Pedido';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -9,6 +9,8 @@ import { Observable } from 'rxjs';
 export class PedidosService {
 
   todos = "http://127.0.0.1:8000/api/auth/pedido";
+  users = "http://127.0.0.1:8000/api/auth/user";
+  metodos = "http://127.0.0.1:8000/api/auth/metodopago";
 
   constructor(private http: HttpClient) { }
 
@@ -16,6 +18,14 @@ export class PedidosService {
     return this.http.get<ApiResponse<IPedido[]>>(`${this.todos}`)
   }
 
+  getAllUsers(): Observable<ApiResponse<IUser[]>>{
+    return this.http.get<ApiResponse<IUser[]>>(`${this.users}`)
+  }
+
+  getAllMetodos(): Observable<ApiResponse<IMetodoPago[]>>{
+    return this.http.get<ApiResponse<IMetodoPago[]>>(`${this.metodos}`)
+  }
+  
   get(id: string): Observable<ApiResponse<IPedido>>{
     return this.http.get<ApiResponse<IPedido>>(`${this.todos}/${id}`)
   }

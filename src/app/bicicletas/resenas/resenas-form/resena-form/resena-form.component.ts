@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IResena } from '../../../../shared/models/resenas';
+import { IResena , IModelo, IUser} from '../../../../shared/models/resenas';
 import { ResenasService } from '../../../../services/resenas/resenas.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -16,6 +16,8 @@ export class ResenaFormComponent implements OnChanges{
   @Input() data: IResena | null = null;
   @Output() onCloseModel = new EventEmitter();
   Form: FormGroup;
+  users: IUser[] = [];
+  modelos: IModelo[] = [];
 
   private initialFormState: any;
 
@@ -30,11 +32,32 @@ export class ResenaFormComponent implements OnChanges{
     this.initialFormState = this.Form.value;
   }
 
+  ngOnInit() {
+    this.getUsuarios();
+    this.getModelos();
+  }
+
+  getUsuarios(){
+    this.Service.getUsers().subscribe({
+      next:(response)=>{
+        this.users = response.data;
+      }
+    });
+  }
+
+  getModelos(){
+    this.Service.getModelos().subscribe({
+      next:(response)=>{
+        this.modelos = response.data;
+      }
+    });
+  }
+
   ngOnChanges(): void {
     if(this.data){
       this.Form.patchValue({
-        user_id: this.data?.user_id,
-        modelo_id: this.data?.modelo_id,
+        user_id: this.data?.user.id,
+        modelo_id: this.data?.modelo.id,
         comentario: this.data?.comentario,
         calificacion: this.data?.calificacion,
         fecha: this.data?.fecha,

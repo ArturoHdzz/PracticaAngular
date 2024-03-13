@@ -15,7 +15,7 @@
             <th scope="col">Descripcion</th>
             <th scope="col">Stock</th>
             <th scope="col">Precio</th>
-            <th scope="col">Catalogo_id</th>
+            <th scope="col">Catalogo</th>
             <th scope="col"></th>
           </tr>
         </thead>
@@ -25,7 +25,7 @@
             <td>{{ item.descripcion }}</td>
             <td>{{ item.stock }}</td>
             <td>{{ item.precio }}</td>
-            <td>{{ item.catalogo_id }}</td>
+            <td>{{ item.catalogo.nombre }}</td>
             <td class="text-right">
               <button type="button" (click)="loadUser(item)"
                 class="btn btn-outline-primary btn-sm mr-2">Edit</button>

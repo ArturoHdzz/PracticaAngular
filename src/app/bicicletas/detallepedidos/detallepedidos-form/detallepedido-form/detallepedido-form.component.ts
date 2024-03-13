@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IDetallePedido } from '../../../../shared/models/DetallePedido';
+import { IDetallePedido, IModelo, IPedido } from '../../../../shared/models/DetallePedido';
 import { DetallepedidosService } from '../../../../services/detallepedidos/detallepedidos.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -16,6 +16,8 @@ export class DetallepedidoFormComponent implements OnChanges{
   @Input() data: IDetallePedido | null = null;
   @Output() onCloseModel = new EventEmitter();
   Form: FormGroup;
+  pedidos: IPedido[] = [];
+  modelos: IModelo[] = [];
 
   private initialFormState: any;
 
@@ -29,11 +31,32 @@ export class DetallepedidoFormComponent implements OnChanges{
     this.initialFormState = this.Form.value;
   }
 
+  ngOnInit() {
+    this.getPedidos();
+    this.getModelos();
+  }
+
+  getPedidos(){
+    this.Service.getAllPedidos().subscribe({
+      next:(response)=>{
+        this.pedidos = response.data;
+      }
+    });
+  }
+
+  getModelos(){
+    this.Service.getAllModelos().subscribe({
+      next:(response)=>{
+        this.modelos = response.data;
+      }
+    });
+  }
+
   ngOnChanges(): void {
     if(this.data){
       this.Form.patchValue({
-        pedido_id: this.data?.pedido_id,
-        modelo_id: this.data?.modelo_id,
+        pedido_id: this.data?.pedido.id,
+        modelo_id: this.data?.modelo.id,
         cantidad: this.data?.cantidad,
         precio: this.data?.precio,
       });

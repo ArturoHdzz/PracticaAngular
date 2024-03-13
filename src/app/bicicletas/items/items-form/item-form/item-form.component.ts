@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IItem } from '../../../../shared/models/Item';
+import { IItem, ICatalogo } from '../../../../shared/models/Item';
 import { ItemsService } from '../../../../services/items/items.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -16,6 +16,7 @@ export class ItemFormComponent implements OnChanges{
   @Input() data: IItem | null = null;
   @Output() onCloseModel = new EventEmitter();
   Form: FormGroup;
+  catalogos: ICatalogo[] = [];
 
   private initialFormState: any;
 
@@ -30,6 +31,18 @@ export class ItemFormComponent implements OnChanges{
     this.initialFormState = this.Form.value;
   }
 
+  ngOnInit() {
+    this.getCatalogos();
+  }
+
+  getCatalogos(){
+    this.Service.getAllCatalogos().subscribe({
+      next:(response)=>{
+        this.catalogos = response.data;
+      }
+    });
+  }
+
   ngOnChanges(): void {
     if(this.data){
       this.Form.patchValue({
@@ -37,7 +50,7 @@ export class ItemFormComponent implements OnChanges{
         descripcion: this.data?.descripcion,
         stock: this.data?.stock,
         precio: this.data?.precio,
-        catalogo_id: this.data?.catalogo_id,
+        catalogo_id: this.data?.catalogo.id,
       });
     }
   }

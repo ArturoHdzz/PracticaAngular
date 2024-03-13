@@ -19,8 +19,8 @@
         </thead>
         <tbody>
           <tr *ngFor="let item of datos; let i = index" class="bg-white border-bottom">
-            <td class="font-weight-medium">{{ item.user_id }}</td>
-            <td>{{ item.modelo_id }}</td>
+            <td class="font-weight-medium">{{ item.user.name }}</td>
+            <td>{{ item.modelo.nombre }}</td>
             <td>{{ item.fecha }}</td>
             <td class="text-right">
               <button type="button" (click)="loadUser(item)"

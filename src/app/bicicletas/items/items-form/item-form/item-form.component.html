@@ -22,7 +22,9 @@
   </div>
   <div class="mb-3">
     <label for="catalogo_id" class="form-label">Catalogo</label>
-    <input type="text" id="catalogo_id" class="form-control" placeholder="Catalogo" formControlName="catalogo_id">
+    <select id="catalogo_id" class="form-control" formControlName="catalogo_id">
+      <option *ngFor="let catalogo of catalogos" [value]="catalogo.id">{{ catalogo.nombre }}</option>
+    </select>
     <div *ngIf="Form.get('catalogo_id')?.hasError('required') && Form.get('catalogo_id')?.touched" class="form-text text-danger">Es required</div>
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>

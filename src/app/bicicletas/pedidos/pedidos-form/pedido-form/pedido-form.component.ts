@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IPedido } from '../../../../shared/models/Pedido';
+import { IPedido , IUser, IMetodoPago} from '../../../../shared/models/Pedido';
 import { PedidosService } from '../../../../services/pedidos/pedidos.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -16,6 +16,8 @@ export class PedidoFormComponent implements OnChanges{
   @Input() data: IPedido | null = null;
   @Output() onCloseModel = new EventEmitter();
   Form: FormGroup;
+  users: IUser[] = [];
+  metodosPago: IMetodoPago[] = [];
 
   private initialFormState: any;
 
@@ -30,11 +32,32 @@ export class PedidoFormComponent implements OnChanges{
     this.initialFormState = this.Form.value;
   }
 
+  ngOnInit() {
+    this.getUsers();
+    this.getMetodosPago();
+  }
+
+  getUsers(){
+    this.Service.getAllUsers().subscribe({
+      next:(response)=>{
+        this.users = response.data;
+      }
+    });
+  }
+
+  getMetodosPago(){
+    this.Service.getAllMetodos().subscribe({
+      next:(response)=>{
+        this.metodosPago = response.data;
+      }
+    });
+  }
+
   ngOnChanges(): void {
     if(this.data){
       this.Form.patchValue({
-        user_id: this.data?.user_id,
-        metodo_pago_id: this.data?.metodo_pago_id,
+        user_id: this.data?.user.id,
+        metodo_pago_id: this.data?.metodo_pago.id,
         total: this.data?.total,
         fecha: this.data?.fecha,
         direccion: this.data?.direccion,

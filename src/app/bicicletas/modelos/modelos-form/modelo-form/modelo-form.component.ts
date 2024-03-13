@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IModelo } from '../../../../shared/models/Modelo';
+import { IModelo, IItem } from '../../../../shared/models/Modelo';
 import { ModelosService } from '../../../../services/modelos/modelos.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -16,6 +16,7 @@ export class ModeloFormComponent implements OnChanges {
   @Input() data: IModelo | null = null;
   @Output() onCloseModel = new EventEmitter();
   Form: FormGroup;
+  items: IItem[] = [];
 
   private initialFormState: any;
 
@@ -28,12 +29,24 @@ export class ModeloFormComponent implements OnChanges {
     this.initialFormState = this.Form.value;
   }
 
+  ngOnInit() {
+    this.getItems();
+  }
+
+  getItems(){
+    this.Service.getItems().subscribe({
+      next:(response)=>{
+        this.items = response.data;
+      }
+    });
+  }
+
   ngOnChanges(): void {
     if(this.data){
       this.Form.patchValue({
         nombre: this.data?.nombre,
         descripcion: this.data?.descripcion,
-        item_id: this.data?.item_id,
+        item_id: this.data?.item.id,
       });
     }
   }

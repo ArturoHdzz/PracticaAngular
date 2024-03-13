@@ -2,10 +2,23 @@ export interface ApiResponse<T>{
     message?: string;
     data: T;
   }
+
+  export interface IPedido{
+    id?: string;
+    fecha: string;
+    total: string;
+    user_id: string;
+  }
+
+  export interface IModelo{
+    id?: string;
+    nombre: string;
+  }
+
   export interface IDetallePedido{
     id?: string;
-    pedido_id: string;
-    modelo_id: string;
+    pedido: IPedido;
+    modelo: IModelo;
     cantidad: string;
     precio: string;
   }

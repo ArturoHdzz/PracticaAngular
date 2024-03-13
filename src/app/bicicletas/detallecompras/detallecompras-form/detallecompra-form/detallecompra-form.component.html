@@ -2,12 +2,16 @@
 <form [formGroup]="Form" class="w-100" (ngSubmit)="onSubmit()" novalidate>
   <div class="mb-3">
     <label for="compra_id" class="form-label">Compra</label>
-    <input type="text" id="compra_id" class="form-control" placeholder="Compra" formControlName="compra_id">
+    <select id="compra_id" class="form-control" formControlName="compra_id">
+      <option *ngFor="let compra of compras" [value]="compra.id">{{ compra.id }}</option>
+    </select>
     <div *ngIf="Form.get('compra_id')?.hasError('required') && Form.get('compra_id')?.touched" class="form-text text-danger">Es required</div>
   </div>
   <div class="mb-3">
     <label for="modelo_id" class="form-label">Modelo</label>
-    <input type="modelo_id" id="modelo_id" class="form-control" placeholder="Modelo" formControlName="modelo_id">
+    <select id="modelo_id" class="form-control" formControlName="modelo_id">
+      <option *ngFor="let modelo of modelos" [value]="modelo.id">{{ modelo.nombre }}</option>
+    </select>
     <div *ngIf="Form.get('modelo_id')?.hasError('required') && Form.get('modelo_id')?.touched" class="form-text text-danger">Es required</div>
   </div>
   <div class="mb-3">

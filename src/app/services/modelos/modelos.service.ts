@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ApiResponse, IModelo } from '../../shared/models/Modelo';
+import { ApiResponse, IModelo, IItem } from '../../shared/models/Modelo';
 
 @Injectable({
   providedIn: 'root'
@@ -9,11 +9,16 @@ import { ApiResponse, IModelo } from '../../shared/models/Modelo';
 export class ModelosService {
 
   todos = "http://127.0.0.1:8000/api/auth/modelo";
+  items = "http://127.0.0.1:8000/api/auth/item";
 
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<ApiResponse<IModelo[]>>{
     return this.http.get<ApiResponse<IModelo[]>>(`${this.todos}`)
+  }
+
+ getItems(): Observable<ApiResponse<IItem[]>>{
+    return this.http.get<ApiResponse<IItem[]>>(`${this.items}`)
   }
 
   get(id: string): Observable<ApiResponse<IModelo>>{

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IFavorito } from '../../../../shared/models/Favorito';
+import { IFavorito, IModelo, IUser } from '../../../../shared/models/Favorito';
 import { FavoritosService } from '../../../../services/favoritos/favoritos.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -16,6 +16,8 @@ export class FavoritoFormComponent implements OnChanges{
   @Input() data: IFavorito | null = null;
   @Output() onCloseModel = new EventEmitter();
   Form: FormGroup;
+  users: IUser[] = [];
+  modelos: IModelo[] = [];
 
   private initialFormState: any;
 
@@ -28,11 +30,32 @@ export class FavoritoFormComponent implements OnChanges{
     this.initialFormState = this.Form.value;
   }
 
+  ngOnInit() {
+    this.getUsuarios();
+    this.getModelos();
+  }
+
+  getUsuarios(){
+    this.Service.getUsers().subscribe({
+      next:(response)=>{
+        this.users = response.data;
+      }
+    });
+  }
+
+  getModelos(){
+    this.Service.getModelos().subscribe({
+      next:(response)=>{
+        this.modelos = response.data;
+      }
+    });
+  }
+
   ngOnChanges(): void {
     if(this.data){
       this.Form.patchValue({
-        user_id: this.data?.user_id,
-        modelo_id: this.data?.modelo_id,
+        user_id: this.data?.user.id,
+        modelo_id: this.data?.modelo.id,
         fecha: this.data?.fecha,
       });
     }

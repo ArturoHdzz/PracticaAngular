@@ -21,7 +21,7 @@
           <tr *ngFor="let item of datos; let i = index" class="bg-white border-bottom">
             <td class="font-weight-medium">{{ item.nombre }}</td>
             <td>{{ item.descripcion }}</td>
-            <td>{{ item.item_id }}</td>
+            <td>{{ item.item.nombre }}</td>
             <td class="text-right">
               <button type="button" (click)="loadUser(item)"
                 class="btn btn-outline-primary btn-sm mr-2">Edit</button>

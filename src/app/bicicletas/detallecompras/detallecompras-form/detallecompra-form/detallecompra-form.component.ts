@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
-import { IDetalleCompra } from '../../../../shared/models/DetalleCompra';
+import { IDetalleCompra, ICompra, IModelo } from '../../../../shared/models/DetalleCompra';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DetallecomprasService } from '../../../../services/detallecompras/detallecompras.service';
 import { ToastrService } from 'ngx-toastr';
@@ -16,6 +16,8 @@ export class DetallecompraFormComponent implements OnChanges{
   @Input() data: IDetalleCompra | null = null;
   @Output() onCloseModel = new EventEmitter();
   Form: FormGroup;
+  compras: ICompra[] = [];
+  modelos: IModelo[] = [];
 
   private initialFormState: any;
 
@@ -29,11 +31,31 @@ export class DetallecompraFormComponent implements OnChanges{
     this.initialFormState = this.Form.value;
   }
 
+  ngOnInit() {
+    this.getCompras();
+    this.getModelos();
+  }
+
+  getCompras(){
+    this.Service.getAllCompras().subscribe({
+      next:(response)=>{
+        this.compras = response.data;
+      }
+    });
+  }
+
+  getModelos(){
+    this.Service.getAllModelos().subscribe({
+      next:(response)=>{
+        this.modelos = response.data;
+      }
+    });
+  }
   ngOnChanges(): void {
     if(this.data){
       this.Form.patchValue({
-        compra_id: this.data?.compra_id,
-        modelo_id: this.data?.modelo_id,
+        compra_id: this.data?.compra.id,
+        modelo_id: this.data?.modelo.id,
         cantidad: this.data?.cantidad,
         precio: this.data?.precio,
       });
