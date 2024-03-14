@@ -3,16 +3,19 @@
   <div class="mb-3">
     <label for="name" class="form-label">Name</label>
     <input type="text" id="name" class="form-control" placeholder="Name" formControlName="name">
+    <div *ngIf="nombreError" class="form-text text-danger">{{ nombreError }}</div>
     <div *ngIf="userForm.get('name')?.hasError('required') && userForm.get('name')?.touched" class="form-text text-danger">Name is required</div>
   </div>
   <div class="mb-3">
     <label for="email" class="form-label">Email Address</label>
     <input type="email" id="email" class="form-control" placeholder="Email Address" formControlName="email">
+    <div *ngIf="correoError" class="form-text text-danger">{{ correoError }}</div>
     <div *ngIf="userForm.get('email')?.hasError('required') && userForm.get('email')?.touched" class="form-text text-danger">Email is required</div>
   </div>
   <div class="mb-3">
     <label for="password" class="form-label">Password Address</label>
     <input type="password" id="password" class="form-control" placeholder="Password" formControlName="password">
+    <div *ngIf="passwordError" class="form-text text-danger">{{ passwordError }}</div>
     <div *ngIf="userForm.get('password')?.hasError('required') && userForm.get('password')?.touched" class="form-text text-danger">Password is required</div>
   </div>
   <div class="mb-3">
@@ -20,8 +23,10 @@
     <select id="role_id" class="form-control" formControlName="role_id">
       <option *ngFor="let role of roles" [value]="role.id">{{ role.name }}</option>
     </select>
+    <div *ngIf="roleIdError" class="form-text text-danger">{{ roleIdError }}</div>
     <div *ngIf="userForm.get('role_id')?.hasError('required') && userForm.get('role_id')?.touched" class="form-text text-danger">Role is required</div>
   </div>
+ 
   <button type="submit" class="btn btn-primary">Submit</button>
   <button type="button" (click)="onClose()" class="btn btn-secondary ms-2">Cancel</button>
 </form>
