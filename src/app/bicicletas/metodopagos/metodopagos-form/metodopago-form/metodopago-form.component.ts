@@ -17,6 +17,10 @@ export class MetodopagoFormComponent implements OnChanges{
   @Output() onCloseModel = new EventEmitter();
   Form: FormGroup;
 
+  public nombreError: String | null = null;
+  public descripcionError: String | null = null;
+  public tipoError: String | null = null;
+
   private initialFormState: any;
 
   constructor(private fb: FormBuilder, private Service: MetodopagosService, private toastService: ToastrService){
@@ -45,21 +49,30 @@ export class MetodopagoFormComponent implements OnChanges{
 
   onSubmit(){
     if(this.Form.valid){
+      let request;
       if(this.data){
-        this.Service.update(this.data.id as string, this.Form.value).subscribe({
-          next:(response)=>{
-            this.toastService.success(response.message)
-            this.onClose();
-          }
-        }); 
+        request = this.Service.update(this.data.id as string, this.Form.value);
       }else{
-        this.Service.create(this.Form.value).subscribe({
-          next:(response)=>{
-            this.toastService.success(response.message)
-            this.onClose();
-          }
-        }); 
+        request = this.Service.create(this.Form.value);
       }
+
+      request.subscribe({
+        next:(response)=> {
+          this.toastService.success(response.message)
+          this.nombreError = null;
+          this.descripcionError = null;
+          this.tipoError = null;
+          this.onClose();
+        },
+        error: (err) => {
+          if(err.error){
+            console.log(err.error);
+            this.nombreError = err.error.nombre;
+            this.descripcionError = err.error.descripcion;
+            this.tipoError = err.error.tipo;
+          }
+        }
+      }); 
     }else{
       this.Form.markAllAsTouched();
     }

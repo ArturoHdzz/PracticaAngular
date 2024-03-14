@@ -5,6 +5,7 @@
     <select id="pedido_id" class="form-control" formControlName="pedido_id">
       <option *ngFor="let pedido of pedidos" [value]="pedido.id">{{ pedido.id }}</option>
     </select>
+    <div *ngIf="pedido_idError" class="form-text text-danger">{{ pedido_idError }}</div>
     <div *ngIf="Form.get('pedido_id')?.hasError('required') && Form.get('pedido_id')?.touched" class="form-text text-danger">Es required</div>
   </div>
   <div class="mb-3">
@@ -12,16 +13,19 @@
     <select id="modelo_id" class="form-control" formControlName="modelo_id">
       <option *ngFor="let modelo of modelos" [value]="modelo.id">{{ modelo.nombre }}</option>
     </select>
+    <div *ngIf="modelo_idError" class="form-text text-danger">{{ modelo_idError }}</div>
     <div *ngIf="Form.get('modelo_id')?.hasError('required') && Form.get('modelo_id')?.touched" class="form-text text-danger">Es required</div>
   </div>
   <div class="mb-3">
     <label for="cantidad" class="form-label">Cantidad</label>
     <input type="text" id="cantidad" class="form-control" placeholder="Cantidad" formControlName="cantidad">
+    <div *ngIf="cantidadError" class="form-text text-danger">{{ cantidadError }}</div>
     <div *ngIf="Form.get('cantidad')?.hasError('required') && Form.get('cantidad')?.touched" class="form-text text-danger">Es required</div>
   </div>
   <div class="mb-3">
     <label for="precio" class="form-label">Precio</label>
     <input type="precio" id="precio" class="form-control" placeholder="Precio" formControlName="precio">
+    <div *ngIf="precioError" class="form-text text-danger">{{ precioError }}</div>
     <div *ngIf="Form.get('precio')?.hasError('required') && Form.get('precio')?.touched" class="form-text text-danger">Es required</div>
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>

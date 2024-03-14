@@ -19,6 +19,11 @@ export class CompraFormComponent implements OnChanges{
   users: IUser[] = [];
   metodosPago: IMetodoPago[] = [];
 
+  public user_idError: String | null = null;
+  public metodo_pago_idError: String | null = null;
+  public totalError: String | null = null;
+  public fechaError: String | null = null;
+
   private initialFormState: any;
 
   constructor(private fb: FormBuilder, private compraService: ComprasService, private toastService: ToastrService){
@@ -70,21 +75,32 @@ export class CompraFormComponent implements OnChanges{
 
   onSubmit(){
     if(this.CompraForm.valid){
+      let request;
       if(this.data){
-        this.compraService.updateCompra(this.data.id as string, this.CompraForm.value).subscribe({
-          next:(response)=>{
-            this.toastService.success(response.message)
-            this.onClose();
-          }
-        }); 
+        request = this.compraService.updateCompra(this.data.id as string, this.CompraForm.value);
       }else{
-        this.compraService.createCompra(this.CompraForm.value).subscribe({
-          next:(response)=>{
-            this.toastService.success(response.message)
-            this.onClose();
-          }
-        }); 
+        request = this.compraService.createCompra(this.CompraForm.value);
       }
+
+      request.subscribe({
+        next:(response)=> {
+          this.toastService.success(response.message)
+          this.user_idError = null;
+          this.metodo_pago_idError = null;
+          this.totalError = null;
+          this.fechaError = null;
+          this.onClose();
+        },
+        error: (err) => {
+          if(err.error){
+            console.log(err.error);
+            this.user_idError = err.error.user_id;
+            this.metodo_pago_idError = err.error.metodo_pago_id;
+            this.totalError = err.error.total;
+            this.fechaError = err.error.fecha;
+          }
+        }
+      }); 
     }else{
       this.CompraForm.markAllAsTouched();
     }

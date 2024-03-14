@@ -18,6 +18,10 @@ export class ModeloFormComponent implements OnChanges {
   Form: FormGroup;
   items: IItem[] = [];
 
+  public nombreError: String | null = null;
+  public descripcionError: String | null = null;
+  public itemError: String | null = null;
+
   private initialFormState: any;
 
   constructor(private fb: FormBuilder, private Service: ModelosService, private toastService: ToastrService){
@@ -58,21 +62,30 @@ export class ModeloFormComponent implements OnChanges {
 
   onSubmit(){
     if(this.Form.valid){
+      let request;
       if(this.data){
-        this.Service.update(this.data.id as string, this.Form.value).subscribe({
-          next:(response)=>{
-            this.toastService.success(response.message)
-            this.onClose();
-          }
-        }); 
+        request = this.Service.update(this.data.id as string, this.Form.value);
       }else{
-        this.Service.create(this.Form.value).subscribe({
-          next:(response)=>{
-            this.toastService.success(response.message)
-            this.onClose();
-          }
-        }); 
+        request = this.Service.create(this.Form.value);
       }
+
+      request.subscribe({
+        next:(response)=> {
+          this.toastService.success(response.message)
+          this.nombreError = null;
+          this.descripcionError = null;
+          this.itemError = null;
+          this.onClose();
+        },
+        error: (err) => {
+          if(err.error){
+            console.log(err.error);
+            this.nombreError = err.error.nombre;
+            this.descripcionError = err.error.descripcion;
+            this.itemError = err.error.item_id;
+          }
+        }
+      }); 
     }else{
       this.Form.markAllAsTouched();
     }

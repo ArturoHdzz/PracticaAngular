@@ -3,11 +3,13 @@
   <div class="mb-3">
     <label for="nombre" class="form-label">Nombre</label>
     <input type="text" id="nombre" class="form-control" placeholder="Nombre" formControlName="nombre">
+    <div *ngIf="nombreError" class="form-text text-danger">{{ nombreError }}</div>
     <div *ngIf="catalogoForm.get('nombre')?.hasError('required') && catalogoForm.get('name')?.touched" class="form-text text-danger">Nombre is required</div>
   </div>
   <div class="mb-3">
     <label for="descripcion" class="form-label">Descripcion</label>
     <input type="descripcion" id="descripcion" class="form-control" placeholder="Descripcion" formControlName="descripcion">
+    <div *ngIf="descripcionError" class="form-text text-danger">{{ descripcionError }}</div>
     <div *ngIf="catalogoForm.get('descripcion')?.hasError('required') && catalogoForm.get('descripcion')?.touched" class="form-text text-danger">Descripcion is required</div>
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>

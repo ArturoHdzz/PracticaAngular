@@ -18,6 +18,12 @@ export class ItemFormComponent implements OnChanges{
   Form: FormGroup;
   catalogos: ICatalogo[] = [];
 
+  public nombreError: String | null = null;
+  public descripcionError: String | null = null;
+  public stockError: String | null = null;
+  public precioError: String | null = null;
+  public catalogo_idError: String | null = null;
+
   private initialFormState: any;
 
   constructor(private fb: FormBuilder, private Service: ItemsService, private toastService: ToastrService){
@@ -62,21 +68,34 @@ export class ItemFormComponent implements OnChanges{
 
   onSubmit(){
     if(this.Form.valid){
+      let request;
       if(this.data){
-        this.Service.update(this.data.id as string, this.Form.value).subscribe({
-          next:(response)=>{
-            this.toastService.success(response.message)
-            this.onClose();
-          }
-        }); 
+        request = this.Service.update(this.data.id as string, this.Form.value);
       }else{
-        this.Service.create(this.Form.value).subscribe({
-          next:(response)=>{
-            this.toastService.success(response.message)
-            this.onClose();
-          }
-        }); 
+        request = this.Service.create(this.Form.value);
       }
+
+      request.subscribe({
+        next:(response)=> {
+          this.toastService.success(response.message)
+          this.nombreError = null;
+          this.descripcionError = null;
+          this.stockError = null;
+          this.precioError = null;
+          this.catalogo_idError = null;
+          this.onClose();
+        },
+        error: (err) => {
+          if(err.error){
+            console.log(err.error);
+            this.nombreError = err.error.nombre;
+            this.descripcionError = err.error.descripcion;
+            this.stockError = err.error.stock;
+            this.precioError = err.error.precio;
+            this.catalogo_idError = err.error.catalogo_id;
+          }
+        }
+      }); 
     }else{
       this.Form.markAllAsTouched();
     }

@@ -19,6 +19,11 @@ export class DetallepedidoFormComponent implements OnChanges{
   pedidos: IPedido[] = [];
   modelos: IModelo[] = [];
 
+  public pedido_idError: String | null = null;
+  public modelo_idError: String | null = null;
+  public cantidadError: String | null = null;
+  public precioError: String | null = null;
+
   private initialFormState: any;
 
   constructor(private fb: FormBuilder, private Service: DetallepedidosService, private toastService: ToastrService){
@@ -70,21 +75,32 @@ export class DetallepedidoFormComponent implements OnChanges{
 
   onSubmit(){
     if(this.Form.valid){
+      let request;
       if(this.data){
-        this.Service.update(this.data.id as string, this.Form.value).subscribe({
-          next:(response)=>{
-            this.toastService.success(response.message)
-            this.onClose();
-          }
-        }); 
+        request = this.Service.update(this.data.id as string, this.Form.value);
       }else{
-        this.Service.create(this.Form.value).subscribe({
-          next:(response)=>{
-            this.toastService.success(response.message)
-            this.onClose();
-          }
-        }); 
+        request = this.Service.create(this.Form.value);
       }
+
+      request.subscribe({
+        next:(response)=> {
+          this.toastService.success(response.message)
+          this.pedido_idError = null;
+          this.modelo_idError = null;
+          this.cantidadError = null;
+          this.precioError = null;
+          this.onClose();
+        },
+        error: (err) => {
+          if(err.error){
+            console.log(err.error);
+            this.pedido_idError = err.error.pedido_id;
+            this.modelo_idError = err.error.modelo_id;
+            this.cantidadError = err.error.cantidad;
+            this.precioError = err.error.precio;
+          }
+        }
+      }); 
     }else{
       this.Form.markAllAsTouched();
     }

@@ -19,6 +19,12 @@ export class ResenaFormComponent implements OnChanges{
   users: IUser[] = [];
   modelos: IModelo[] = [];
 
+  public userError: String | null = null;
+  public modeloError: String | null = null;
+  public comentarioError: String | null = null;
+  public calificacionError: String | null = null;
+  public fechaError: String | null = null;
+
   private initialFormState: any;
 
   constructor(private fb: FormBuilder, private Service: ResenasService, private toastService: ToastrService){
@@ -72,21 +78,34 @@ export class ResenaFormComponent implements OnChanges{
 
   onSubmit(){
     if(this.Form.valid){
+      let request;
       if(this.data){
-        this.Service.update(this.data.id as string, this.Form.value).subscribe({
-          next:(response)=>{
-            this.toastService.success(response.message)
-            this.onClose();
-          }
-        }); 
+        request = this.Service.update(this.data.id as string, this.Form.value);
       }else{
-        this.Service.create(this.Form.value).subscribe({
-          next:(response)=>{
-            this.toastService.success(response.message)
-            this.onClose();
-          }
-        }); 
+        request = this.Service.create(this.Form.value);
       }
+
+      request.subscribe({
+        next:(response)=> {
+          this.toastService.success(response.message)
+          this.userError = null;
+          this.modeloError = null;
+          this.comentarioError = null;
+          this.calificacionError = null;
+          this.fechaError = null;
+          this.onClose();
+        },
+        error: (err) => {
+          if(err.error){
+            console.log(err.error);
+            this.userError = err.error.user_id;
+            this.modeloError = err.error.modelo_id;
+            this.comentarioError = err.error.comentario;
+            this.calificacionError = err.error.calificacion;
+            this.fechaError = err.error.fecha;
+          }
+        }
+      }); 
     }else{
       this.Form.markAllAsTouched();
     }
