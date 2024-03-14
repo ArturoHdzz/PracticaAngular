@@ -5,6 +5,7 @@ import { ModelComponent } from '../../shared/ui/model/model.component';
 import { CatalogoFormComponent } from './catalogos-form/catalogo-form/catalogo-form.component';
 import { CommonModule } from '@angular/common';
 import { CatalogosService } from '../../services/catalogos/catalogos.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-catalogos',
@@ -17,10 +18,26 @@ export class CatalogosComponent implements OnInit{
   isModelOpen = false;
   catalogos: ICatalogo[]=[];
   catalogo:ICatalogo | null = null;
+  roleId: any;
 
-  constructor(private CatalogoService: CatalogosService, private toastService: ToastrService){}
+  constructor(private CatalogoService: CatalogosService, private toastService: ToastrService, private http: HttpClient){
+  }
+  
+  rolUser(){
+    
+    this.http.get('http://127.0.0.1:8000/api/auth/roluser', ).subscribe(
+      (res: any) => {
+        this.roleId = res.role_id;
+      },
+      (error) => {
+        console.log(error)
+      }
+    );
+  }
 
   ngOnInit(): void {
+    this.roleId = 3;
+    this.rolUser();
     this.getAllCatalogo();
   }
 

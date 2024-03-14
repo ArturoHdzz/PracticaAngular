@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { ModelComponent } from '../../shared/ui/model/model.component';
 import { CompraFormComponent } from './compras-form/compra-form/compra-form.component';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-compras',
@@ -18,9 +19,26 @@ export class ComprasComponent implements OnInit {
   isModelOpen = false;
   compras: ICompra[]=[];
   compra:ICompra | null = null;
-  constructor(private compraService: ComprasService, private toastService: ToastrService){}
+  roleId: any;
+
+  constructor(private compraService: ComprasService, private toastService: ToastrService, private http: HttpClient){}
+
+
+  rolUser(){
+    
+    this.http.get('http://127.0.0.1:8000/api/auth/roluser', ).subscribe(
+      (res: any) => {
+        this.roleId = res.role_id;
+      },
+      (error) => {
+        console.log(error)
+      }
+    );
+  }
 
   ngOnInit(): void {
+    this.roleId = 3;
+    this.rolUser();
     this.getAllCompra();
   }
 

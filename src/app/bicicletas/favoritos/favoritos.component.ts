@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { IFavorito } from '../../shared/models/Favorito';
 import { FavoritosService } from '../../services/favoritos/favoritos.service';
 import { ToastrService } from 'ngx-toastr';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-favoritos',
@@ -17,10 +18,32 @@ export class FavoritosComponent implements OnInit {
   isModelOpen = false;
   datos: IFavorito[]=[];
   dato:IFavorito | null = null;
-  constructor(private Service: FavoritosService, private toastService: ToastrService){}
+  roleId: any;
+
+  constructor(private Service: FavoritosService, private toastService: ToastrService, private http: HttpClient){}
 
   ngOnInit(): void {
+    this.roleId = 3;
+    this.rolUser();
     this.getAll();
+  }
+
+  //roleId: any;
+  //, private http: HttpClient
+  //this.roleId = 3;
+  //this.rolUser();
+  //*ngIf="roleId != 3"
+
+  rolUser(){
+    
+    this.http.get('http://127.0.0.1:8000/api/auth/roluser', ).subscribe(
+      (res: any) => {
+        this.roleId = res.role_id;
+      },
+      (error) => {
+        console.log(error)
+      }
+    );
   }
 
   getAll(){

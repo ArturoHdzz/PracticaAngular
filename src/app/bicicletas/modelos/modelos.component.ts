@@ -5,6 +5,7 @@ import { ModeloFormComponent } from './modelos-form/modelo-form/modelo-form.comp
 import { IModelo } from '../../shared/models/Modelo';
 import { ModelosService } from '../../services/modelos/modelos.service';
 import { ToastrService } from 'ngx-toastr';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-modelos',
@@ -17,10 +18,26 @@ export class ModelosComponent implements OnInit {
   isModelOpen = false;
   datos: IModelo[]=[];
   dato:IModelo | null = null;
-  constructor(private Service: ModelosService, private toastService: ToastrService){}
+  roleId: any;
+
+  constructor(private Service: ModelosService, private toastService: ToastrService, private http: HttpClient){}
 
   ngOnInit(): void {
+    this.roleId = 3;
+    this.rolUser();
     this.getAll();
+  }
+
+  rolUser(){
+    
+    this.http.get('http://127.0.0.1:8000/api/auth/roluser', ).subscribe(
+      (res: any) => {
+        this.roleId = res.role_id;
+      },
+      (error) => {
+        console.log(error)
+      }
+    );
   }
 
   getAll(){

@@ -6,6 +6,7 @@ import { IDetallePedido } from '../../shared/models/DetallePedido';
 import { DetallepedidosService } from '../../services/detallepedidos/detallepedidos.service';
 import { ToastrService } from 'ngx-toastr';
 import { isNull } from 'util';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-detallepedidos',
@@ -18,10 +19,26 @@ export class DetallepedidosComponent implements OnInit{
   isModelOpen = false;
   datos: IDetallePedido[]=[];
   dato:IDetallePedido | null = null;
-  constructor(private Service: DetallepedidosService, private toastService: ToastrService){}
+  roleId: any;
+
+  constructor(private Service: DetallepedidosService, private toastService: ToastrService, private http: HttpClient){}
 
   ngOnInit(): void {
+    this.roleId = 3;
+    this.rolUser();
     this.getAll();
+  }
+
+  rolUser(){
+    
+    this.http.get('http://127.0.0.1:8000/api/auth/roluser', ).subscribe(
+      (res: any) => {
+        this.roleId = res.role_id;
+      },
+      (error) => {
+        console.log(error)
+      }
+    );
   }
 
   getAll(){

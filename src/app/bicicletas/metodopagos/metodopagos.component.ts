@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { IMetodoPago } from '../../shared/models/MetodoPago';
 import { MetodopagosService } from '../../services/metodopagos/metodopagos.service';
 import { ToastrService } from 'ngx-toastr';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-metodopagos',
@@ -17,10 +18,25 @@ export class MetodopagosComponent implements OnInit {
   isModelOpen = false;
   datos: IMetodoPago[]=[];
   dato:IMetodoPago | null = null;
-  constructor(private Service: MetodopagosService, private toastService: ToastrService){}
+  roleId: any;
+
+  constructor(private Service: MetodopagosService, private toastService: ToastrService, private http: HttpClient){}
 
   ngOnInit(): void {
+    this.roleId = 3;
+    this.rolUser();
     this.getAll();
+  }
+  rolUser(){
+    
+    this.http.get('http://127.0.0.1:8000/api/auth/roluser', ).subscribe(
+      (res: any) => {
+        this.roleId = res.role_id;
+      },
+      (error) => {
+        console.log(error)
+      }
+    );
   }
 
   getAll(){

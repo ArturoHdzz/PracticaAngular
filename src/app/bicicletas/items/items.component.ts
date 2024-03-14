@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { IItem } from '../../shared/models/Item';
 import { ItemsService } from '../../services/items/items.service';
 import { ToastrService } from 'ngx-toastr';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-items',
@@ -17,10 +18,26 @@ export class ItemsComponent implements OnInit {
   isModelOpen = false;
   datos: IItem[]=[];
   dato:IItem | null = null;
-  constructor(private Service: ItemsService, private toastService: ToastrService){}
+  roleId: any;
+
+  constructor(private Service: ItemsService, private toastService: ToastrService, private http: HttpClient){}
 
   ngOnInit(): void {
+    this.roleId = 3;
+    this.rolUser();
     this.getAll();
+  }
+
+  rolUser(){
+    
+    this.http.get('http://127.0.0.1:8000/api/auth/roluser', ).subscribe(
+      (res: any) => {
+        this.roleId = res.role_id;
+      },
+      (error) => {
+        console.log(error)
+      }
+    );
   }
 
   getAll(){

@@ -12,11 +12,9 @@ import { NgIf } from '@angular/common';
 })
 export class LayoutComponent {
   roleId: any;
-  Error: string | null;
 
   constructor(private http: HttpClient, private router: Router){
-     this.Error = null;
-     this.roleId = null;
+     this.roleId = 3;
      this.rolUser();
   }
 
@@ -25,12 +23,9 @@ export class LayoutComponent {
     this.http.get('http://127.0.0.1:8000/api/auth/roluser', ).subscribe(
       (res: any) => {
         this.roleId = res.role_id;
-        console.log(this.roleId)
-        this.Error = null;
       },
       (error) => {
         console.log(error)
-        this.Error = "El correo o la contraseña son invalidos, porfavor, reviselas bien."
       }
     );
   }

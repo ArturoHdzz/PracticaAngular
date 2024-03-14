@@ -5,6 +5,7 @@ import { IDetalleCompra } from '../../shared/models/DetalleCompra';
 import { DetallecomprasService } from '../../services/detallecompras/detallecompras.service';
 import { ToastrService } from 'ngx-toastr';
 import { DetallecompraFormComponent } from './detallecompras-form/detallecompra-form/detallecompra-form.component';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-detallecompras',
@@ -17,9 +18,25 @@ export class DetallecomprasComponent implements OnInit{
   isModelOpen = false;
   detalleCompras: IDetalleCompra[]=[];
   detalleCompra:IDetalleCompra | null = null;
-  constructor(private DetallecomprasService: DetallecomprasService, private toastService: ToastrService){}
+  roleId: any;
+
+  constructor(private DetallecomprasService: DetallecomprasService, private toastService: ToastrService, private http: HttpClient){}
+
+  rolUser(){
+    
+    this.http.get('http://127.0.0.1:8000/api/auth/roluser', ).subscribe(
+      (res: any) => {
+        this.roleId = res.role_id;
+      },
+      (error) => {
+        console.log(error)
+      }
+    );
+  }
 
   ngOnInit(): void {
+    this.roleId = 3;
+    this.rolUser();
     this.getAll();
   }
 
