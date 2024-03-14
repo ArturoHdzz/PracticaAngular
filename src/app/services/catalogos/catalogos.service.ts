@@ -9,10 +9,6 @@ import { ApiResponse, ICatalogo } from '../../shared/models/Catalogo';
 export class CatalogosService {
 
   todos = "http://127.0.0.1:8000/api/auth/catalogo";
-  uno = "http://127.0.0.1:8000/api/auth/catalogo";
-  crear = "http://127.0.0.1:8000/api/auth/catalogo";
-  actualizar = "http://127.0.0.1:8000/api/auth/catalogo";
-  eliminar = "http://127.0.0.1:8000/api/auth/catalogo";
 
   constructor(private http: HttpClient) { }
 
@@ -21,18 +17,18 @@ export class CatalogosService {
   }
 
   getCatalogo(id: string): Observable<ApiResponse<ICatalogo>>{
-    return this.http.get<ApiResponse<ICatalogo>>(`${this.uno}/${id}`)
+    return this.http.get<ApiResponse<ICatalogo>>(`${this.todos}/${id}`)
   }
 
   createCatalogo(catalogo: ICatalogo): Observable<ApiResponse<ICatalogo>>{
-    return this.http.post<ApiResponse<ICatalogo>>(`${this.crear}`, catalogo)
+    return this.http.post<ApiResponse<ICatalogo>>(`${this.todos}`, catalogo)
   }
 
   updateCatalogo(id: string, catalogo: ICatalogo){
-    return this.http.put<ApiResponse<ICatalogo>>(`${this.actualizar}/${id}`, catalogo)
+    return this.http.put<ApiResponse<ICatalogo>>(`${this.todos}/${id}`, catalogo)
   }
 
   deleteCatalogo(id: string): Observable<ApiResponse<ICatalogo>>{
-    return this.http.delete<ApiResponse<ICatalogo>>(`${this.eliminar}/${id}`)
+    return this.http.delete<ApiResponse<ICatalogo>>(`${this.todos}/${id}`)
   }
 }
