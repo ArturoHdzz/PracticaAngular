@@ -5,6 +5,7 @@
     <select id="user_id" class="form-control" formControlName="user_id">
       <option *ngFor="let user of users" [value]="user.id">{{ user.name }}</option>
     </select>
+    <div *ngIf="user_idError" class="form-text text-danger">{{ user_idError }}</div> 
     <div *ngIf="CompraForm.get('user_id')?.hasError('required') && CompraForm.get('user_id')?.touched" class="form-text text-danger">Usuario is required</div>
   </div>
   <div class="mb-3">
@@ -12,16 +13,19 @@
     <select id="metodo_pago_id" class="form-control" formControlName="metodo_pago_id">
       <option *ngFor="let metodo_pago of metodosPago" [value]="metodo_pago.id">{{ metodo_pago.nombre }}</option>
     </select>
+    <div *ngIf="metodo_pago_idError" class="form-text text-danger">{{ metodo_pago_idError }}</div>
     <div *ngIf="CompraForm.get('metodo_pago_id')?.hasError('required') && CompraForm.get('metodo_pago_id')?.touched" class="form-text text-danger">Metodo de pago is required</div>
   </div>
   <div class="mb-3">
     <label for="total" class="form-label">Total</label>
     <input type="total" id="total" class="form-control" placeholder="Total" formControlName="total">
+    <div *ngIf="totalError" class="form-text text-danger">{{ totalError }}</div>
     <div *ngIf="CompraForm.get('total')?.hasError('required') && CompraForm.get('total')?.touched" class="form-text text-danger">Total is required</div>
   </div>
   <div class="mb-3">
     <label for="fecha" class="form-label">Fecha</label>
     <input type="text" id="fecha" class="form-control" placeholder="Role ID" formControlName="fecha">
+    <div *ngIf="fechaError" class="form-text text-danger">{{ fechaError }}</div>
     <div *ngIf="CompraForm.get('fecha')?.hasError('required') && CompraForm.get('fecha')?.touched" class="form-text text-danger">Fecha is required</div>
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>

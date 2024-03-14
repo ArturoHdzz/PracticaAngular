@@ -17,6 +17,9 @@ export class CatalogoFormComponent implements OnChanges{
   @Output() onCloseModel = new EventEmitter();
   catalogoForm: FormGroup;
 
+  public nombreError: String | null = null;
+  public descripcionError: String | null = null;
+
   private initialFormState: any;
 
   constructor(private fb: FormBuilder, private catalogoService: CatalogosService, private toastService: ToastrService){
@@ -43,21 +46,28 @@ export class CatalogoFormComponent implements OnChanges{
 
   onSubmit(){
     if(this.catalogoForm.valid){
+      let request;
       if(this.data){
-        this.catalogoService.updateCatalogo(this.data.id as string, this.catalogoForm.value).subscribe({
-          next:(response)=>{
-            this.toastService.success(response.message)
-            this.onClose();
-          }
-        }); 
+        request = this.catalogoService.updateCatalogo(this.data.id as string, this.catalogoForm.value);
       }else{
-        this.catalogoService.createCatalogo(this.catalogoForm.value).subscribe({
-          next:(response)=>{
-            this.toastService.success(response.message)
-            this.onClose();
-          }
-        }); 
+        request = this.catalogoService.createCatalogo(this.catalogoForm.value);
       }
+
+      request.subscribe({
+        next:(response)=> {
+          this.toastService.success(response.message)
+          this.nombreError = null;
+          this.descripcionError = null;
+          this.onClose();
+        },
+        error: (err) => {
+          if(err.error){
+            console.log(err.error);
+            this.nombreError = err.error.nombre;
+            this.descripcionError = err.error.descripcion;
+          }
+        }
+      }); 
     }else{
       this.catalogoForm.markAllAsTouched();
     }

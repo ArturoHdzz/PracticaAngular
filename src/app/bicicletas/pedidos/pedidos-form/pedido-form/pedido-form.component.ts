@@ -19,6 +19,12 @@ export class PedidoFormComponent implements OnChanges{
   users: IUser[] = [];
   metodosPago: IMetodoPago[] = [];
 
+  public userError: String | null = null;
+  public metodoPagoError: String | null = null;
+  public totalError: String | null = null;
+  public fechaError: String | null = null;
+  public direccionError: String | null = null;
+
   private initialFormState: any;
 
   constructor(private fb: FormBuilder, private Service: PedidosService, private toastService: ToastrService){
@@ -72,21 +78,34 @@ export class PedidoFormComponent implements OnChanges{
 
   onSubmit(){
     if(this.Form.valid){
+      let request;
       if(this.data){
-        this.Service.update(this.data.id as string, this.Form.value).subscribe({
-          next:(response)=>{
-            this.toastService.success(response.message)
-            this.onClose();
-          }
-        }); 
+        request = this.Service.update(this.data.id as string, this.Form.value);
       }else{
-        this.Service.create(this.Form.value).subscribe({
-          next:(response)=>{
-            this.toastService.success(response.message)
-            this.onClose();
-          }
-        }); 
+        request = this.Service.create(this.Form.value);
       }
+
+      request.subscribe({
+        next:(response)=> {
+          this.toastService.success(response.message)
+          this.userError = null;
+          this.metodoPagoError = null;
+          this.totalError = null;
+          this.fechaError = null;
+          this.direccionError = null;
+          this.onClose();
+        },
+        error: (err) => {
+          if(err.error){
+            console.log(err.error);
+            this.userError = err.error.user_id;
+            this.metodoPagoError = err.error.metodo_pago_id;
+            this.totalError = err.error.total;
+            this.fechaError = err.error.fecha;
+            this.direccionError = err.error.direccion;
+          }
+        }
+      }); 
     }else{
       this.Form.markAllAsTouched();
     }

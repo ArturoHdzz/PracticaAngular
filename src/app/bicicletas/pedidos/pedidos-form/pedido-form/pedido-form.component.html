@@ -5,6 +5,7 @@
     <select id="user_id" class="form-control" formControlName="user_id">
       <option *ngFor="let user of users" [value]="user.id">{{ user.name }}</option>
     </select>
+    <div *ngIf="userError" class="form-text text-danger">{{ userError }}</div>
     <div *ngIf="Form.get('user_id')?.hasError('required') && Form.get('user_id')?.touched" class="form-text text-danger">Es required</div>
   </div>
   <div class="mb-3">
@@ -12,21 +13,25 @@
     <select id="metodo_pago_id" class="form-control" formControlName="metodo_pago_id">
       <option *ngFor="let metodo_pago of metodosPago" [value]="metodo_pago.id">{{ metodo_pago.nombre }}</option>
     </select>
+    <div *ngIf="metodoPagoError" class="form-text text-danger">{{ metodoPagoError }}</div>
     <div *ngIf="Form.get('metodo_pago_id')?.hasError('required') && Form.get('metodo_pago_id')?.touched" class="form-text text-danger">Es required</div>
   </div>
   <div class="mb-3">
     <label for="total" class="form-label">Total</label>
     <input type="text" id="total" class="form-control" placeholder="Total" formControlName="total">
+    <div *ngIf="totalError" class="form-text text-danger">{{ totalError }}</div>
     <div *ngIf="Form.get('total')?.hasError('required') && Form.get('total')?.touched" class="form-text text-danger">Es required</div>
   </div>
   <div class="mb-3">
     <label for="fecha" class="form-label">Fecha</label>
     <input type="text" id="fecha" class="form-control" placeholder="Fecha" formControlName="fecha">
+    <div *ngIf="fechaError" class="form-text text-danger">{{ fechaError }}</div>
     <div *ngIf="Form.get('fecha')?.hasError('required') && Form.get('fecha')?.touched" class="form-text text-danger">Es required</div>
   </div>
   <div class="mb-3">
     <label for="direccion" class="form-label">Direccion</label>
     <input type="text" id="direccion" class="form-control" placeholder="Direccion" formControlName="direccion">
+    <div *ngIf="direccionError" class="form-text text-danger">{{ direccionError }}</div>
     <div *ngIf="Form.get('direccion')?.hasError('required') && Form.get('direccion')?.touched" class="form-text text-danger">Es required</div>
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
