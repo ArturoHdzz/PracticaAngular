@@ -31,9 +31,27 @@ export class LoginComponent {
         this.Error = null;
       },
       (error) => {
+        this.shakeFields();
         this.Error = "El correo o la contraseña son invalidos, porfavor, reviselas bien."
       }
     );
+  }
+
+  shakeFields() {
+    const emailField = document.getElementById('email');
+    const passwordField = document.getElementById('password');
+    if (emailField && passwordField) {
+      emailField.classList.add('shake-error');
+      passwordField.classList.add('shake-error');
+      emailField.style.borderColor = 'red';
+      passwordField.style.borderColor = 'red';
+      setTimeout(() => {
+        emailField.classList.remove('shake-error');
+        passwordField.classList.remove('shake-error');
+        emailField.style.borderColor = '';
+        passwordField.style.borderColor = '';
+      }, 1000);
+    }
   }
 }
 export class Login{

@@ -1,6 +1,6 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, OnChanges, SimpleChanges } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { NgIf} from "@angular/common";
 
@@ -11,19 +11,24 @@ import { NgIf} from "@angular/common";
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
-export class RegisterComponent {
+export class RegisterComponent{
   registerObj: Register;
   public nombreError:String|null = null;
   public correoError:String|null = null;
   public passwordError:String|null = null;
 
 
+
+
+
   constructor(private http: HttpClient, private router: Router){
     this.registerObj = new Register();
+
+
   }
 
+
   onRegister(){
-    debugger;
     this.http.post('http://127.0.0.1:8000/api/auth/register', this.registerObj).subscribe((res:any)=>{
       if(res.result){
         alert("Registro Exitosamente")
@@ -42,6 +47,7 @@ export class RegisterComponent {
       this.passwordError = error.error.data.password;
     })
   }
+
 }
 export class Register{
   name: string;
