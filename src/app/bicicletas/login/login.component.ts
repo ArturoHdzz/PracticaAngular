@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgIf} from "@angular/common";
+import { UsersService } from '../../services/users/users.service';
 
 
 @Component({
@@ -17,8 +18,23 @@ export class LoginComponent {
   public Error:String|null = null;
 
 
-  constructor(private http: HttpClient, private router: Router){
+  constructor(private http: HttpClient, private router: Router, private userService: UsersService){
     this.loginObj = new Login();
+  }
+
+  loginAsGuest(): void {
+    this.userService.createGuestUser().subscribe(
+      (res:any)=>{
+        alert("Entrando como invitado")
+        localStorage.setItem('TOKEN', res.token)
+        this.router. navigateByUrl('/layout/home')
+        this.Error = null;
+    },
+    (error)=>{
+      this.Error = "No puede entrar como invitado, porfavor, intente de nuevo."
+      alert(this.Error)
+    }
+    );
   }
 
   onLogin(){

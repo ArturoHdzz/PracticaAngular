@@ -14,6 +14,7 @@ export class UsersService {
   crear = "http://127.0.0.1:8000/api/auth/user";
   actualizar = "http://127.0.0.1:8000/api/auth/user";
   eliminar = "http://127.0.0.1:8000/api/auth/user";
+  invitado = "http://127.0.0.1:8000/api/auth/usergest";
 
   constructor(private http: HttpClient) { }
 
@@ -39,5 +40,9 @@ export class UsersService {
 
   deleteUser(id: string): Observable<ApiResponse<IUser>>{
     return this.http.delete<ApiResponse<IUser>>(`${this.eliminar}/${id}`)
+  }
+
+  createGuestUser(): Observable<ApiResponse<IUser>> {
+    return this.http.post<ApiResponse<IUser>>(`${this.invitado}`, {});
   }
 }
