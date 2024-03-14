@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { NgIf } from '@angular/common';
+import { TokenService } from '../../services/token.service';
 
 @Component({
   selector: 'app-layout',
@@ -13,9 +14,13 @@ import { NgIf } from '@angular/common';
 export class LayoutComponent {
   roleId: any;
 
-  constructor(private http: HttpClient, private router: Router){
-     this.roleId = 3;
+  constructor(private http: HttpClient, private router: Router, private TokenService: TokenService) {
+    this.roleId = 3;
      this.rolUser();
+  }
+
+  logout(): void {
+    this.TokenService.logout();
   }
 
   rolUser(){

@@ -18,6 +18,11 @@ export class UserFormComponent implements OnChanges {
   userForm: FormGroup;
   roles: IRole[] = [];
 
+  public nombreError: String | null = null;
+  public correoError: String | null = null;
+  public passwordError: String | null = null;
+  public roleIdError: String | null = null;
+
   private initialFormState: any;
 
   constructor(private fb: FormBuilder, private userService: UsersService, private toastService: ToastrService){
@@ -60,21 +65,32 @@ export class UserFormComponent implements OnChanges {
 
   onSubmit(){
     if(this.userForm.valid){
+      let request;
       if(this.data){
-        this.userService.updateUser(this.data.id as string, this.userForm.value).subscribe({
-          next:(response)=>{
-            this.toastService.success(response.message)
-            this.onClose();
-          }
-        }); 
+        request = this.userService.updateUser(this.data.id as string, this.userForm.value);
       }else{
-        this.userService.createUser(this.userForm.value).subscribe({
-          next:(response)=>{
-            this.toastService.success(response.message)
-            this.onClose();
-          }
-        }); 
+        request = this.userService.createUser(this.userForm.value);
       }
+
+      request.subscribe({
+        next:(response)=>{
+          this.toastService.success(response.message)
+          this.nombreError = null;
+          this.correoError = null;
+          this.passwordError = null;
+          this.roleIdError = null;
+          this.onClose();
+        },
+        error: (err) => {
+          if(err.error){
+            console.log(err.error);
+            this.nombreError = err.error.name 
+            this.correoError = err.error.email 
+            this.passwordError = err.error.password 
+            this.roleIdError = err.error.role_id 
+          }
+        }
+      }); 
     }else{
       this.userForm.markAllAsTouched();
     }
