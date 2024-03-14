@@ -9,7 +9,7 @@
                 <input type="text" class="form-control" id="codigo" placeholder="Código" maxlength="6" pattern="\d{6}" [(ngModel)]="codigoObj.verification_code" name="verification_code" required>
                 <small class="form-text text-muted">Ingresa un código de exactamente 6 dígitos.</small>
               </div>
-              <button type="submit" class="btn btn-primary btn-block" (click)="onCodigo()">Enviar</button>
+              <button type="submit" class="btn btn-primary btn-block" (click)="onCodigo()" [disabled]="isRequestInProgress">Enviar</button>
             </form>
           </div>
         </div>

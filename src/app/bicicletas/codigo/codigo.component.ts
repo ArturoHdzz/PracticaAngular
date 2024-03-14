@@ -14,12 +14,16 @@ import { NgIf } from "@angular/common";
 export class CodigoComponent {
   codigoObj: Codigo;
   public Error: String | null = null;
+  isRequestInProgress = false;
+
 
   constructor(private http: HttpClient, private router: Router){
     this.codigoObj = new Codigo();
   }
 
   onCodigo(){
+    this.isRequestInProgress = true;
+
     this.http.post('http://127.0.0.1:8000/api/auth/verify', this.codigoObj).subscribe(
       (res:any)=>{
       if(res.result){
@@ -35,7 +39,9 @@ export class CodigoComponent {
       this.Error = "El codigo es invalido, porfavor, reviselo bien."
       alert(this.Error)
     }
-    )
+    ).add(() => {
+      this.isRequestInProgress = false;
+    });
   }
 }
 

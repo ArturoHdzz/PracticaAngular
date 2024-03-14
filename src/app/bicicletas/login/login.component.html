@@ -18,8 +18,8 @@
                 <div *ngIf="Error" class="text-danger" style="margin-bottom: 20px; font-weight: bold;">{{ Error }}</div>
                 <div class="d-grid gap-2">
                   <button type="submit" class="btn btn-primary" (click)="onLogin()" [disabled]="isRequestInProgress">Iniciar sesión</button>
-                  <a routerLink="/register" class="btn btn-link">Crear cuenta</a>
-                  <a (click)="loginAsGuest()" class="btn btn-link">Entrar como invitado</a>
+                  <a *ngIf="!isRequestInProgress" routerLink="/register" class="btn btn-link">Crear cuenta</a>
+                  <a *ngIf="!isRequestInProgress" (click)="loginAsGuest()" class="btn btn-link">Entrar como invitado</a>
                 </div>
               </form>
             </div> 
