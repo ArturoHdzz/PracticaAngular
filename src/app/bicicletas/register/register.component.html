@@ -6,10 +6,11 @@
             <h4 class="mb-0">Registro</h4>
           </div>
           <div class="card-body">
-            <form>
+            <form [formGroup]="userForm">
+              <p>{{userForm.value.name}}</p>
               <div class="form-group">
                 <label for="nombre">Nombre:</label>
-                <input type="text" class="form-control" [(ngModel)]="registerObj.name" name="name" required id="name">
+                <input type="text" class="form-control" [(ngModel)]="registerObj.name" name="name" required id="name" formControlName="name">
                 <div *ngIf="nombreError" class="text-danger" style="margin-bottom: 20px; font-weight: bold;">{{ nombreError }}</div>
               </div>
               <div class="form-group">

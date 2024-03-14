@@ -7,29 +7,37 @@ import { NgIf} from "@angular/common";
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [RouterLink, FormsModule, HttpClientModule, NgIf],
+  imports: [RouterLink, FormsModule, HttpClientModule, NgIf, ReactiveFormsModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
-export class RegisterComponent{
+export class RegisterComponent implements OnChanges{
   registerObj: Register;
   public nombreError:String|null = null;
   public correoError:String|null = null;
   public passwordError:String|null = null;
+  userForm: FormGroup;
+  private initialFormState: any;
 
 
 
 
-
-  constructor(private http: HttpClient, private router: Router){
+  constructor(private http: HttpClient, private router: Router, private fb: FormBuilder){
     this.registerObj = new Register();
 
-
+    this.userForm = this.fb.group({
+      name: new FormControl('', [Validators.required, Validators.maxLength(30)]),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+    });
+    this.initialFormState = this.userForm.value;
   }
-
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(this.userForm)
+    }
 
   onRegister(){
-    this.http.post('http://127.0.0.1:8000/api/auth/register', this.registerObj).subscribe((res:any)=>{
+    this.http.post('http://127.0.0.1:8000/api/auth/registerl', this.registerObj).subscribe((res:any)=>{
       if(res.result){
         alert("Registro Exitosamente")
         this.router. navigateByUrl('/login')
@@ -41,7 +49,7 @@ export class RegisterComponent{
       }
     },
     (error) => {
-      console.log(error.error.data.name)
+      console.log(this.userForm)
       this.nombreError = error.error.data.name;
       this.correoError = error.error.data.email;
       this.passwordError = error.error.data.password;
