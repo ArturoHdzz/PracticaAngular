@@ -23,6 +23,7 @@ export class DetallepedidoFormComponent implements OnChanges{
   public modelo_idError: String | null = null;
   public cantidadError: String | null = null;
   public precioError: String | null = null;
+  public stockError: String | null = null; 
 
   private initialFormState: any;
 
@@ -89,6 +90,7 @@ export class DetallepedidoFormComponent implements OnChanges{
           this.modelo_idError = null;
           this.cantidadError = null;
           this.precioError = null;
+          this.stockError = null;
           this.onClose();
         },
         error: (err) => {
@@ -98,6 +100,7 @@ export class DetallepedidoFormComponent implements OnChanges{
             this.modelo_idError = err.error.modelo_id;
             this.cantidadError = err.error.cantidad;
             this.precioError = err.error.precio;
+            this.stockError = err.error.stock; 
           }
         }
       }); 

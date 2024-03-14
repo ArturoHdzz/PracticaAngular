@@ -20,6 +20,7 @@
     <label for="cantidad" class="form-label">Cantidad</label>
     <input type="text" id="cantidad" class="form-control" placeholder="Cantidad" formControlName="cantidad">
     <div *ngIf="cantidadError" class="form-text text-danger">{{ cantidadError }}</div>
+    <div *ngIf="stockError" class="form-text text-danger">{{ stockError }}</div> 
     <div *ngIf="Form.get('cantidad')?.hasError('required') && Form.get('cantidad')?.touched" class="form-text text-danger">Es required</div>
   </div>
   <div class="mb-3">
