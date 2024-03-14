@@ -7,23 +7,37 @@
           </div>
           <div class="card-body">
             <form [formGroup]="userForm">
-              <p>{{userForm.value.name}}</p>
               <div class="form-group">
                 <label for="nombre">Nombre:</label>
-                <input type="text" class="form-control" [(ngModel)]="registerObj.name" name="name" required id="name" formControlName="name">
-                <div *ngIf="nombreError" class="text-danger" style="margin-bottom: 20px; font-weight: bold;">{{ nombreError }}</div>
+                <input type="text" class="form-control" [(ngModel)]="registerObj.name" name="name" required id="name" formControlName="name" style="margin-bottom: 10px;">
+                <div *ngIf="userForm.get('name')?.errors && userForm.get('name')?.touched" class="text-danger" style="margin-bottom: 10px; font-weight: bold;">
+                  <ul>
+                    <li *ngIf="userForm.get('name')?.hasError('required')">El nombre es obligatorio.</li>
+                    <li *ngIf="userForm.get('name')?.hasError('maxlength')">El nombre no debe exceder los 30 caracteres.</li>
+                  </ul>
+                </div>              
               </div>
               <div class="form-group">
                 <label for="email">Correo Electrónico:</label>
-                <input type="email" class="form-control" [(ngModel)]="registerObj.email" name="email" required id="email">
-                <div *ngIf="correoError" class="text-danger" style="margin-bottom: 20px; font-weight: bold;">{{ correoError }}</div>
+                <input type="email" class="form-control" [(ngModel)]="registerObj.email" name="email" required id="email" formControlName="email" style="margin-bottom: 10px;">
+                <div *ngIf="userForm.get('email')?.errors && userForm.get('email')?.touched" class="text-danger" style="margin-bottom: 10px; font-weight: bold;">
+                  <ul>
+                    <li *ngIf="userForm.get('email')?.hasError('required')">El email es obligatorio.</li>
+                    <li *ngIf="userForm.get('email')?.hasError('email')">El email no tiene un formato correcto.</li>
+                  </ul>
+                </div> 
               </div>
               <div class="form-group">
                 <label for="password">Contraseña:</label>
-                <input type="password" class="form-control" [(ngModel)]="registerObj.password" name="password" required id="password">
-                <div *ngIf="passwordError" class="text-danger" style="margin-bottom: 20px; font-weight: bold;">{{ passwordError }}</div>
+                <input type="password" class="form-control" [(ngModel)]="registerObj.password" name="password" required id="password" formControlName="password" style="margin-bottom: 10px;">
+                <div *ngIf="userForm.get('password')?.errors && userForm.get('password')?.touched" class="text-danger" style="margin-bottom: 10px; font-weight: bold;">
+                  <ul>
+                    <li *ngIf="userForm.get('password')?.hasError('required')">La contraseña es obligatoria.</li>
+                    <li *ngIf="userForm.get('password')?.hasError('minlength')">La contraseña debe tener un minimo de 8 caracteres.</li>
+                  </ul>
+                </div> 
               </div>
-              <button type="submit" class="btn btn-primary" (click)="onRegister()">Registrarse</button>
+              <button type="submit" class="btn btn-primary" (click)="onRegister()" [disabled]="isRequestInProgress">Registrarse</button>
             </form>
           </div>
         </div>

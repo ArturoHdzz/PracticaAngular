@@ -16,6 +16,8 @@ import { UsersService } from '../../services/users/users.service';
 export class LoginComponent {
   loginObj: Login;
   public Error:String|null = null;
+  isRequestInProgress = false;
+
 
 
   constructor(private http: HttpClient, private router: Router, private userService: UsersService){
@@ -38,8 +40,7 @@ export class LoginComponent {
   }
 
   onLogin(){
-    debugger;
-    
+    this.isRequestInProgress = true;
     this.http.post('http://127.0.0.1:8000/api/auth/login', this.loginObj).subscribe(
       (res: any) => {
         alert("Inicio de sesión Exitosamente")
@@ -50,7 +51,9 @@ export class LoginComponent {
         this.shakeFields();
         this.Error = "El correo o la contraseña son invalidos, porfavor, reviselas bien."
       }
-    );
+    ).add(() => {
+      this.isRequestInProgress = false;
+    });
   }
 
   shakeFields() {

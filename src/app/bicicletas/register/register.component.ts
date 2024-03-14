@@ -11,12 +11,13 @@ import { NgIf} from "@angular/common";
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
-export class RegisterComponent implements OnChanges{
+export class RegisterComponent{
   registerObj: Register;
   public nombreError:String|null = null;
   public correoError:String|null = null;
   public passwordError:String|null = null;
   userForm: FormGroup;
+  isRequestInProgress = false;
   private initialFormState: any;
 
 
@@ -28,32 +29,37 @@ export class RegisterComponent implements OnChanges{
     this.userForm = this.fb.group({
       name: new FormControl('', [Validators.required, Validators.maxLength(30)]),
       email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+      password: new FormControl('', [Validators.required, Validators.minLength(10)]),
     });
     this.initialFormState = this.userForm.value;
   }
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.userForm)
-    }
+  
 
-  onRegister(){
-    this.http.post('http://127.0.0.1:8000/api/auth/registerl', this.registerObj).subscribe((res:any)=>{
-      if(res.result){
-        alert("Registro Exitosamente")
-        this.router. navigateByUrl('/login')
-        this.correoError = null;
-        this.nombreError = null;
-        this.passwordError = null;
-      }else{
-        alert("Datos invalidos")
+
+  onRegister() {
+    this.isRequestInProgress = true;
+
+    this.http.post('http://127.0.0.1:8000/api/auth/register', this.registerObj).subscribe(
+      (res: any) => {
+        if (res.result) {
+          alert("Registro Exitosamente");
+          this.router.navigateByUrl('/login');
+          this.correoError = null;
+          this.nombreError = null;
+          this.passwordError = null;
+        } else {
+          alert("Datos inválidos");
+        }
+      },
+      (error) => {
+        console.log(this.userForm.errors);
+        this.nombreError = error.error.data.name;
+        this.correoError = error.error.data.email;
+        this.passwordError = error.error.data.password;
       }
-    },
-    (error) => {
-      console.log(this.userForm)
-      this.nombreError = error.error.data.name;
-      this.correoError = error.error.data.email;
-      this.passwordError = error.error.data.password;
-    })
+    ).add(() => {
+      this.isRequestInProgress = false;
+    });
   }
 
 }
