@@ -29,7 +29,7 @@ export class UserFormComponent implements OnChanges {
     this.userForm = this.fb.group({
       name: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required]),
+      password: new FormControl(''),
       role_id: new FormControl('', [Validators.required]),
     });
     this.initialFormState = this.userForm.value;
