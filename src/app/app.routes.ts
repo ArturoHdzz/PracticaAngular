@@ -19,6 +19,7 @@ export const routes: Routes = [
         { path: 'pedidos', loadComponent:() => import('./bicicletas/pedidos/pedidos.component').then((c) => c.PedidosComponent) },
         { path: 'resenas', loadComponent:() => import('./bicicletas/resenas/resenas.component').then((c) => c.ResenasComponent) },
         { path: 'users', loadComponent:() => import('./bicicletas/users/users.component').then((c) => c.UsersComponent)},
+        { path: 'logs', loadComponent:() => import('./bicicletas/logs/logs.component').then((c) => c.LogsComponent)},
         { path: '**', loadComponent:() => import('./bicicletas/home/home.component').then((c) => c.HomeComponent), pathMatch: 'full' }
     ], canActivate: [authGuard]},
     { path: '**', loadComponent:() => import('./bicicletas/login/login.component').then((c) => c.LoginComponent), pathMatch: 'full' }

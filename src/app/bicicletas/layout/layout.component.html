@@ -48,6 +48,9 @@
             <li *ngIf="roleId == 1" class="nav-item">
               <a class="nav-link" routerLink="/layout/users">Usuarios</a>
             </li>
+            <li *ngIf="roleId == 1" class="nav-item">
+              <a class="nav-link" routerLink="/layout/logs">Logs</a>
+            </li>
           </div>
             <li class="nav-item">
               <a class="nav-link" (click)="logout()" routerLink="/login">Cerrar Sesion</a>

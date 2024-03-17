@@ -1,0 +1,30 @@
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h4 class="font-weight-bold text-2xl"></h4>
+    </div>
+    <div class="table-responsive shadow-sm rounded-lg">
+      <h1 class="p-3 h4 font-weight-bold text-left text-white bg-primary">
+        Logs
+      </h1>
+      <table class="table table-sm table-bordered text-left">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">Usuario</th>
+            <th scope="col">Modelo</th>
+            <th scope="col">Comentario</th>
+            <th scope="col">Calificacion</th>
+            <th scope="col">Fecha</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of datos; let i = index" class="bg-white border-bottom">
+            <td class="font-weight-medium">{{ item }}</td>
+            <td>{{ item }}</td>
+            <td>{{ item }}</td>
+            <td>{{ item.calificacion }}</td>
+            <td>{{ item.fecha }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
