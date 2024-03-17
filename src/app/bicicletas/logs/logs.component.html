@@ -28,11 +28,11 @@
             <td>{{ item.values }}</td>
             <td>{{ item.updated_at }}</td>
             <td>{{ item.created_at }}</td>
-            <td>{{ item.user.name }}</td>
-            <td>{{ item.user.email }}</td>
-            <td>{{ item.user.role_id }}</td>
-            <td>{{ item.user.created_at }}</td>
-            <td>{{ item.updated_at }}</td>
+            <td>{{ item.user?.name }}</td>
+            <td>{{ item.user?.email }}</td>
+            <td>{{ item.user?.role_id }}</td>
+            <td>{{ item.user?.created_at }}</td>
+            <td>{{ item.user?.updated_at }}</td>
           </tr>
         </tbody>
       </table>
