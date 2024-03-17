@@ -9,20 +9,30 @@
       <table class="table table-sm table-bordered text-left">
         <thead class="thead-light">
           <tr>
-            <th scope="col">Usuario</th>
-            <th scope="col">Modelo</th>
-            <th scope="col">Comentario</th>
-            <th scope="col">Calificacion</th>
-            <th scope="col">Fecha</th>
+            <th scope="col">route</th>
+            <th scope="col">method</th>
+            <th scope="col">values</th>
+            <th scope="col">updated_at</th>
+            <th scope="col">created_at</th>
+            <th scope="col">name</th>
+            <th scope="col">email</th>
+            <th scope="col">role_id</th>
+            <th scope="col">User created_at</th>
+            <th scope="col">User updated_at</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let item of datos; let i = index" class="bg-white border-bottom">
-            <td class="font-weight-medium">{{ item }}</td>
-            <td>{{ item }}</td>
-            <td>{{ item }}</td>
-            <td>{{ item.calificacion }}</td>
-            <td>{{ item.fecha }}</td>
+            <td class="font-weight-medium">{{ item.route }}</td>
+            <td>{{ item.method }}</td>
+            <td>{{ item.values }}</td>
+            <td>{{ item.updated_at }}</td>
+            <td>{{ item.created_at }}</td>
+            <td>{{ item.user.name }}</td>
+            <td>{{ item.user.email }}</td>
+            <td>{{ item.user.role_id }}</td>
+            <td>{{ item.user.created_at }}</td>
+            <td>{{ item.updated_at }}</td>
           </tr>
         </tbody>
       </table>
