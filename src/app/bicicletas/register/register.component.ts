@@ -62,6 +62,8 @@ export class RegisterComponent{
     });
   }
 
+  
+
 }
 export class Register{
   name: string;
