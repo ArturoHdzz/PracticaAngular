@@ -29,7 +29,7 @@ export class RegisterComponent{
     this.userForm = this.fb.group({
       name: new FormControl('', [Validators.required, Validators.maxLength(30)]),
       email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required, Validators.minLength(10)]),
+      password: new FormControl('', [Validators.required, Validators.minLength(8)]),
     });
     this.initialFormState = this.userForm.value;
   }
