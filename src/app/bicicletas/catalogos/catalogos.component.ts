@@ -6,6 +6,7 @@ import { CatalogoFormComponent } from './catalogos-form/catalogo-form/catalogo-f
 import { CommonModule } from '@angular/common';
 import { CatalogosService } from '../../services/catalogos/catalogos.service';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment.development';
 
 @Component({
   selector: 'app-catalogos',
@@ -25,7 +26,7 @@ export class CatalogosComponent implements OnInit{
   
   rolUser(){
     
-    this.http.get('http://127.0.0.1:8000/api/auth/roluser', ).subscribe(
+    this.http.get(environment.UrlRolUser, ).subscribe(
       (res: any) => {
         this.roleId = res.role_id;
       },
