@@ -6,6 +6,7 @@ import { IMetodoPago } from '../../shared/models/MetodoPago';
 import { MetodopagosService } from '../../services/metodopagos/metodopagos.service';
 import { ToastrService } from 'ngx-toastr';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment.development';
 
 @Component({
   selector: 'app-metodopagos',
@@ -29,7 +30,7 @@ export class MetodopagosComponent implements OnInit {
   }
   rolUser(){
     
-    this.http.get('http://127.0.0.1:8000/api/auth/roluser', ).subscribe(
+    this.http.get(environment.UrlRolUser, ).subscribe(
       (res: any) => {
         this.roleId = res.role_id;
       },

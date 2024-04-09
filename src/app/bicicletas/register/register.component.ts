@@ -3,6 +3,7 @@ import { Component, OnChanges, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { NgIf} from "@angular/common";
+import { environment } from '../../../environments/environment.development';
 
 @Component({
   selector: 'app-register',
@@ -39,7 +40,7 @@ export class RegisterComponent{
   onRegister() {
     this.isRequestInProgress = true;
 
-    this.http.post('http://127.0.0.1:8000/api/auth/register', this.registerObj).subscribe(
+    this.http.post(environment.UrlRegister, this.registerObj).subscribe(
       (res: any) => {
         if (res.result) {
           alert("Registro Exitosamente");

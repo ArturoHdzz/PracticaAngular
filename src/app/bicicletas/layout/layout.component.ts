@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { TokenService } from '../../services/token.service';
+import { environment } from '../../../environments/environment.development';
 
 @Component({
   selector: 'app-layout',
@@ -25,7 +26,7 @@ export class LayoutComponent {
 
   rolUser(){
     
-    this.http.get('http://127.0.0.1:8000/api/auth/roluser', ).subscribe(
+    this.http.get(environment.UrlRolUser, ).subscribe(
       (res: any) => {
         this.roleId = res.role_id;
       },

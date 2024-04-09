@@ -4,6 +4,7 @@ import { Router, RouterLink } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgIf} from "@angular/common";
 import { UsersService } from '../../services/users/users.service';
+import { environment } from '../../../environments/environment.development';
 
 
 @Component({
@@ -41,7 +42,7 @@ export class LoginComponent {
 
   onLogin(){
     this.isRequestInProgress = true;
-    this.http.post('http://127.0.0.1:8000/api/auth/login', this.loginObj).subscribe(
+    this.http.post(environment.UrlLogin, this.loginObj).subscribe(
       (res: any) => {
         alert("Inicio de sesión Exitosamente")
         this.router.navigateByUrl('/codigo')

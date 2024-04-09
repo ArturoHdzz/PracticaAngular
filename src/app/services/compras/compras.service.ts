@@ -2,43 +2,40 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiResponse, ICompra, IUser, IMetodoPago } from '../../shared/models/Campra';
+import { environment } from '../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ComprasService {
 
-  todos = "http://127.0.0.1:8000/api/auth/compra";
-  user = "http://127.0.0.1:8000/api/auth/user";
-  metodo_pago = "http://127.0.0.1:8000/api/auth/metodopago";
-
   constructor(private http: HttpClient) { }
 
   getAllCompra(): Observable<ApiResponse<ICompra[]>>{
-    return this.http.get<ApiResponse<ICompra[]>>(`${this.todos}`)
+    return this.http.get<ApiResponse<ICompra[]>>(`${environment.UrlCompras}`)
   }
 
   getAllMetodoPago(): Observable<ApiResponse<IMetodoPago[]>>{
-    return this.http.get<ApiResponse<IMetodoPago[]>>(`${this.metodo_pago}`)
+    return this.http.get<ApiResponse<IMetodoPago[]>>(`${environment.UrlMetodopago}`)
   }
 
   getAllUser(): Observable<ApiResponse<IUser[]>>{
-    return this.http.get<ApiResponse<IUser[]>>(`${this.user}`)
+    return this.http.get<ApiResponse<IUser[]>>(`${environment.UrlUser}`)
   }
 
   getCompra(id: string): Observable<ApiResponse<ICompra>>{
-    return this.http.get<ApiResponse<ICompra>>(`${this.todos}/${id}`)
+    return this.http.get<ApiResponse<ICompra>>(`${environment.UrlCompras}/${id}`)
   }
 
   createCompra(compra: ICompra): Observable<ApiResponse<ICompra>>{
-    return this.http.post<ApiResponse<ICompra>>(`${this.todos}`, compra)
+    return this.http.post<ApiResponse<ICompra>>(`${environment.UrlCompras}`, compra)
   }
 
   updateCompra(id: string, compra: ICompra){
-    return this.http.put<ApiResponse<ICompra>>(`${this.todos}/${id}`, compra)
+    return this.http.put<ApiResponse<ICompra>>(`${environment.UrlCompras}/${id}`, compra)
   }
 
   deleteCompra(id: string): Observable<ApiResponse<ICompra>>{
-    return this.http.delete<ApiResponse<ICompra>>(`${this.todos}/${id}`)
+    return this.http.delete<ApiResponse<ICompra>>(`${environment.UrlCompras}/${id}`)
   }
 }

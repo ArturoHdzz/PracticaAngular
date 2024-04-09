@@ -2,43 +2,40 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiResponse, IDetallePedido, IModelo, IPedido } from '../../shared/models/DetallePedido';
+import { environment } from '../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DetallepedidosService {
 
-  todos = "http://127.0.0.1:8000/api/auth/detallepedido";
-  pedidos = "http://127.0.0.1:8000/api/auth/pedido";
-  modelos = "http://127.0.0.1:8000/api/auth/modelo";
-
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<ApiResponse<IDetallePedido[]>>{
-    return this.http.get<ApiResponse<IDetallePedido[]>>(`${this.todos}`)
+    return this.http.get<ApiResponse<IDetallePedido[]>>(`${environment.UrlDetallepedido}`)
   }
 
   getAllPedidos(): Observable<ApiResponse<IPedido[]>>{
-    return this.http.get<ApiResponse<IPedido[]>>(`${this.pedidos}`)
+    return this.http.get<ApiResponse<IPedido[]>>(`${environment.UrlPedido}`)
   }
 
   getAllModelos(): Observable<ApiResponse<IModelo[]>>{
-    return this.http.get<ApiResponse<IModelo[]>>(`${this.modelos}`)
+    return this.http.get<ApiResponse<IModelo[]>>(`${environment.UrlModelo}`)
   }
 
   get(id: string): Observable<ApiResponse<IDetallePedido>>{
-    return this.http.get<ApiResponse<IDetallePedido>>(`${this.todos}/${id}`)
+    return this.http.get<ApiResponse<IDetallePedido>>(`${environment.UrlDetallepedido}/${id}`)
   }
 
   create(datos: IDetallePedido): Observable<ApiResponse<IDetallePedido>>{
-    return this.http.post<ApiResponse<IDetallePedido>>(`${this.todos}`, datos)
+    return this.http.post<ApiResponse<IDetallePedido>>(`${environment.UrlDetallepedido}`, datos)
   }
 
   update(id: string, datos: IDetallePedido){
-    return this.http.put<ApiResponse<IDetallePedido>>(`${this.todos}/${id}`, datos)
+    return this.http.put<ApiResponse<IDetallePedido>>(`${environment.UrlDetallepedido}/${id}`, datos)
   }
 
   delete(id: string): Observable<ApiResponse<IDetallePedido>>{
-    return this.http.delete<ApiResponse<IDetallePedido>>(`${this.todos}/${id}`)
+    return this.http.delete<ApiResponse<IDetallePedido>>(`${environment.UrlDetallepedido}/${id}`)
   }
 }

@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { NgIf } from "@angular/common";
+import { environment } from '../../../environments/environment.development';
 
 @Component({
   selector: 'app-codigo',
@@ -24,7 +25,7 @@ export class CodigoComponent {
   onCodigo(){
     this.isRequestInProgress = true;
 
-    this.http.post('http://127.0.0.1:8000/api/auth/verify', this.codigoObj).subscribe(
+    this.http.post(environment.UrlVerify, this.codigoObj).subscribe(
       (res:any)=>{
       if(res.result){
         alert("Codigo valido")
