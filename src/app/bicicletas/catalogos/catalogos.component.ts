@@ -39,17 +39,9 @@ export class CatalogosComponent implements OnInit{
   ngOnInit(): void {
     this.roleId = 3;
     this.rolUser();
-    this.listenToCatalogoEvents();
+    this.getAllCatalogo();
   }
 
-  listenToCatalogoEvents() {
-    this.CatalogoService.getServerSentEvent('http://127.0.0.1:8000/api/auth/catalogo').subscribe({
-      next: (catalogoData: ICatalogo[]) => {
-        this.catalogos = catalogoData;
-      },
-      error: (error) => console.error(error),
-    });
-  }
 
   getAllCatalogo(){
     this.CatalogoService.getAllCatalogo().subscribe({

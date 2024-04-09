@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import Echo from 'laravel-echo';
+import Pusher from 'pusher-js';
 import { ItemFormComponent } from './items-form/item-form/item-form.component';
 import { ModelComponent } from '../../shared/ui/model/model.component';
 import { CommonModule } from '@angular/common';
@@ -20,6 +22,7 @@ export class ItemsComponent implements OnInit {
   datos: IItem[]=[];
   dato:IItem | null = null;
   roleId: any;
+  echo: any;
 
   constructor(private Service: ItemsService, private toastService: ToastrService, private http: HttpClient){}
 
@@ -27,7 +30,20 @@ export class ItemsComponent implements OnInit {
     this.roleId = 3;
     this.rolUser();
     this.getAll();
-  }
+
+  this.echo = new Echo({
+    broadcaster: 'pusher',
+    key: 'ASD1234FG',
+    cluster: 'mt1',
+    encrypted: true,
+    wsHost: window.location.hostname,
+    wsPort: 6001,
+    disableStats: true,
+  });
+
+  this.listenForEvents();
+ 
+}
 
   rolUser(){
     
@@ -77,5 +93,22 @@ export class ItemsComponent implements OnInit {
     this.dato = null
     this.isModelOpen = false;
     this.getAll();
+  }
+
+  listenForEvents(){
+    this.echo.channel('items').listen('ItemCreated', (e: any) => {
+      console.log('Item created', e);
+      this.getAll();
+    });
+
+    this.echo.channel('items').listen('ItemUpdated', (e: any) => {
+      console.log('Item updated', e);
+      this.getAll();
+    });
+
+    this.echo.channel('items').listen('ItemDeleted', (e: any) => {
+      console.log('Item deleted', e);
+      this.getAll();
+    });
   }
 }
