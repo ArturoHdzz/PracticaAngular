@@ -6,6 +6,7 @@ import { DetallecomprasService } from '../../services/detallecompras/detallecomp
 import { ToastrService } from 'ngx-toastr';
 import { DetallecompraFormComponent } from './detallecompras-form/detallecompra-form/detallecompra-form.component';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-detallecompras',
@@ -20,7 +21,7 @@ export class DetallecomprasComponent implements OnInit{
   detalleCompra:IDetalleCompra | null = null;
   roleId: any;
 
-  constructor(private DetallecomprasService: DetallecomprasService, private toastService: ToastrService, private http: HttpClient){}
+  constructor(private DetallecomprasService: DetallecomprasService, private toastService: ToastrService, private http: HttpClient, private router: Router){}
 
   rolUser(){
     
@@ -44,9 +45,16 @@ export class DetallecomprasComponent implements OnInit{
     this.DetallecomprasService.getAll().subscribe({
       next:(response)=>{
         this.detalleCompras = response.data;
+      },
+      error: (error) => {
+        if (error.status === 403) {
+          this.router.navigate(['/login']);
+        }
       }
-    })
+      });
   }
+
+
 
   deleteUser(id: string) {
     console.log("Deleting user with ID:", id);

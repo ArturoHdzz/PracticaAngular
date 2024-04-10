@@ -6,6 +6,7 @@ import { IModelo } from '../../shared/models/Modelo';
 import { ModelosService } from '../../services/modelos/modelos.service';
 import { ToastrService } from 'ngx-toastr';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-modelos',
@@ -20,7 +21,7 @@ export class ModelosComponent implements OnInit {
   dato:IModelo | null = null;
   roleId: any;
 
-  constructor(private Service: ModelosService, private toastService: ToastrService, private http: HttpClient){}
+  constructor(private Service: ModelosService, private toastService: ToastrService, private http: HttpClient, private router: Router){}
 
   ngOnInit(): void {
     this.roleId = 3;
@@ -44,9 +45,16 @@ export class ModelosComponent implements OnInit {
     this.Service.getAll().subscribe({
       next:(response)=>{
         this.datos = response.data;
+      },
+      error: (error) => {
+        if (error.status === 403) {
+          this.router.navigate(['/login']);
+        }
       }
-    })
+      });
   }
+
+
 
   deleteUser(id: string) {
     console.log("Deleting user with ID:", id);

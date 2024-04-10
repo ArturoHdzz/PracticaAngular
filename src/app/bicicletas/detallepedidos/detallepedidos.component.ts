@@ -7,6 +7,8 @@ import { DetallepedidosService } from '../../services/detallepedidos/detallepedi
 import { ToastrService } from 'ngx-toastr';
 import { isNull } from 'util';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-detallepedidos',
@@ -21,7 +23,7 @@ export class DetallepedidosComponent implements OnInit{
   dato:IDetallePedido | null = null;
   roleId: any;
 
-  constructor(private Service: DetallepedidosService, private toastService: ToastrService, private http: HttpClient){}
+  constructor(private Service: DetallepedidosService, private toastService: ToastrService, private http: HttpClient, private router: Router){}
 
   ngOnInit(): void {
     this.roleId = 3;
@@ -45,9 +47,16 @@ export class DetallepedidosComponent implements OnInit{
     this.Service.getAll().subscribe({
       next:(response)=>{
         this.datos = response.data;
+      },
+      error: (error) => {
+        if (error.status === 403) {
+          this.router.navigate(['/login']);
+        }
       }
-    })
+      });
   }
+
+
 
   deleteUser(id: string) {
     console.log("Deleting user with ID:", id);

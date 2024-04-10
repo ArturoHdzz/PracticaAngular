@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { ModelComponent } from '../../shared/ui/model/model.component';
 import { CompraFormComponent } from './compras-form/compra-form/compra-form.component';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-compras',
@@ -21,7 +22,7 @@ export class ComprasComponent implements OnInit {
   compra:ICompra | null = null;
   roleId: any;
 
-  constructor(private compraService: ComprasService, private toastService: ToastrService, private http: HttpClient){}
+  constructor(private compraService: ComprasService, private toastService: ToastrService, private http: HttpClient, private router: Router){}
 
 
   rolUser(){
@@ -46,9 +47,15 @@ export class ComprasComponent implements OnInit {
     this.compraService.getAllCompra().subscribe({
       next:(response)=>{
         this.compras = response.data;
+      },
+      error: (error) => {
+        if (error.status === 403) {
+          this.router.navigate(['/login']);
+        }
       }
-    })
+      });
   }
+
 
   deleteUser(id: string) {
     console.log("Deleting user with ID:", id);

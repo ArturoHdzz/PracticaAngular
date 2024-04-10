@@ -6,6 +6,7 @@ import { IMetodoPago } from '../../shared/models/MetodoPago';
 import { MetodopagosService } from '../../services/metodopagos/metodopagos.service';
 import { ToastrService } from 'ngx-toastr';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-metodopagos',
@@ -20,7 +21,7 @@ export class MetodopagosComponent implements OnInit {
   dato:IMetodoPago | null = null;
   roleId: any;
 
-  constructor(private Service: MetodopagosService, private toastService: ToastrService, private http: HttpClient){}
+  constructor(private Service: MetodopagosService, private toastService: ToastrService, private http: HttpClient, private router: Router){}
 
   ngOnInit(): void {
     this.roleId = 3;
@@ -43,9 +44,16 @@ export class MetodopagosComponent implements OnInit {
     this.Service.getAll().subscribe({
       next:(response)=>{
         this.datos = response.data;
+      },
+      error: (error) => {
+        if (error.status === 403) {
+          this.router.navigate(['/login']);
+        }
       }
-    })
+      });
   }
+
+
 
   deleteUser(id: string) {
     console.log("Deleting user with ID:", id);

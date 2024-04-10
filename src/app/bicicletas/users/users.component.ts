@@ -5,6 +5,7 @@ import { UsersService } from '../../services/users/users.service';
 import { IUser } from '../../shared/models/User';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-users',
@@ -17,7 +18,7 @@ export class UsersComponent implements OnInit{
   isModelOpen = false;
   users: IUser[]=[];
   user:IUser | null = null;
-  constructor(private userService: UsersService, private toastService: ToastrService){}
+  constructor(private userService: UsersService, private toastService: ToastrService, private router: Router){}
 
   ngOnInit(): void {
     this.getAllUser();
@@ -27,9 +28,16 @@ export class UsersComponent implements OnInit{
     this.userService.getAllUser().subscribe({
       next:(response)=>{
         this.users = response.data;
+      },
+      error: (error) => {
+        if (error.status === 403) {
+          this.router.navigate(['/login']);
+        }
       }
-    })
+      });
   }
+
+
 
   deleteUser(id: string) {
     console.log("Deleting user with ID:", id);

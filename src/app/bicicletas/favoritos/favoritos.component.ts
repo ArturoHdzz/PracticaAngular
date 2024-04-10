@@ -6,6 +6,7 @@ import { IFavorito } from '../../shared/models/Favorito';
 import { FavoritosService } from '../../services/favoritos/favoritos.service';
 import { ToastrService } from 'ngx-toastr';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-favoritos',
@@ -20,7 +21,7 @@ export class FavoritosComponent implements OnInit {
   dato:IFavorito | null = null;
   roleId: any;
 
-  constructor(private Service: FavoritosService, private toastService: ToastrService, private http: HttpClient){}
+  constructor(private Service: FavoritosService, private toastService: ToastrService, private http: HttpClient, private router: Router){}
 
   ngOnInit(): void {
     this.roleId = 3;
@@ -50,9 +51,16 @@ export class FavoritosComponent implements OnInit {
     this.Service.getAll().subscribe({
       next:(response)=>{
         this.datos = response.data;
+      },
+      error: (error) => {
+        if (error.status === 403) {
+          this.router.navigate(['/login']);
+        }
       }
-    })
+      });
   }
+
+
 
   deleteUser(id: string) {
     console.log("Deleting user with ID:", id);

@@ -6,6 +6,7 @@ import { CatalogoFormComponent } from './catalogos-form/catalogo-form/catalogo-f
 import { CommonModule } from '@angular/common';
 import { CatalogosService } from '../../services/catalogos/catalogos.service';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-catalogos',
@@ -20,7 +21,8 @@ export class CatalogosComponent implements OnInit{
   catalogo:ICatalogo | null = null;
   roleId: any;
 
-  constructor(private CatalogoService: CatalogosService, private toastService: ToastrService, private http: HttpClient){
+  constructor(private CatalogoService: CatalogosService, private toastService: ToastrService, private http: HttpClient, private router: Router){
+
   }
   
   rolUser(){
@@ -40,13 +42,17 @@ export class CatalogosComponent implements OnInit{
     this.rolUser();
     this.getAllCatalogo();
   }
-
   getAllCatalogo(){
     this.CatalogoService.getAllCatalogo().subscribe({
-      next:(response)=>{
+      next: (response) => {
         this.catalogos = response.data;
+      },
+      error: (error) => {
+        if (error.status === 403) {
+          this.router.navigate(['/login']);
+        }
       }
-    })
+    });
   }
 
   deleteUser(id: string) {

@@ -19,4 +19,12 @@ export class TokenService {
   logout(): void {
     localStorage.removeItem('TOKEN'); 
   }
+
+  verifyIfIsActive(/*token: string*/): Observable<any> {
+    /*const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });*/
+    return this.http.get<any>('http://127.0.0.1:8000/api/auth/isactive'/*, { headers }*/);
+  }
+
 }

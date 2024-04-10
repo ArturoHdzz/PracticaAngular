@@ -6,6 +6,7 @@ import { LogsService } from '../../services/logs/logs.service';
 import { ToastrService } from 'ngx-toastr';
 import { HttpClient } from '@angular/common/http';
 import { Subscription, interval, switchMap } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-logs',
@@ -18,7 +19,7 @@ export class LogsComponent implements OnInit, OnDestroy{
   datos: Ilogs[]=[];
   timeInterval: Subscription;
 
-  constructor(private Service: LogsService, private toastService: ToastrService, private http: HttpClient){
+  constructor(private Service: LogsService, private toastService: ToastrService, private http: HttpClient, private router: Router){
     this.timeInterval = new Subscription();
   }
 
@@ -58,8 +59,13 @@ export class LogsComponent implements OnInit, OnDestroy{
         this.datos = response.data;
       },
       error: (error) => {
+        if (error.status === 403) {
+          this.router.navigate(['/login']);
+        }
         console.error('Error al obtener registros:', error);
       }
     });
   }
+
+
 }
