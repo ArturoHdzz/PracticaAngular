@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import Echo from 'laravel-echo';
 import Pusher from 'pusher-js';
 import { ItemFormComponent } from './items-form/item-form/item-form.component';
@@ -17,9 +17,9 @@ import { environment } from '../../../environments/environment.development';
   templateUrl: './items.component.html',
   styleUrl: './items.component.css'
 })
-export class ItemsComponent implements OnInit {
+export class ItemsComponent implements OnInit, OnDestroy {
   isModelOpen = false;
-  datos: IItem[]=[];
+  datos: IItem[] = [];
   dato:IItem | null = null;
   roleId: any;
   echo: any;
@@ -30,23 +30,40 @@ export class ItemsComponent implements OnInit {
     this.roleId = 3;
     this.rolUser();
     this.getAll();
+    this.websocket();
+  }
 
-  this.echo = new Echo({
-    broadcaster: 'pusher',
-    key: 'ASD1234FG',
-    cluster: 'mt1',
-    encrypted: true,
-    wsHost: window.location.hostname,
-    wsPort: 6001,
-    disableStats: true,
-  });
+  ngOnDestroy(): void {
+    this.closewebsocket();
+  }
 
-  this.listenForEvents();
- 
-}
+  closewebsocket(){
+    if(this.echo){
+      this.echo.disconnect();
+    }
+  }
+
+  websocket(){
+    (window as any).Pusher = Pusher;
+    this.echo = new Echo({
+      broadcaster: 'pusher',
+      key: 'ASD1234FG',
+      cluster: 'mt1',
+      encrypted: true,
+      wsHost: window.location.hostname,
+      wsPort: 6001,
+      forceTLS: false,
+      disableStatus:true
+    });
+
+    this.echo.channel('items')
+      .listen('.item.created', (e: any) => {
+        console.log(e.item);
+        this.datos = e.item;
+      });
+  }
 
   rolUser(){
-    
     this.http.get(environment.UrlRolUser, ).subscribe(
       (res: any) => {
         this.roleId = res.role_id;
@@ -60,7 +77,7 @@ export class ItemsComponent implements OnInit {
   getAll(){
     this.Service.getAll().subscribe({
       next:(response)=>{
-        this.datos = response.data;
+        //this.datos = response.data;
       }
     })
   }
@@ -90,25 +107,8 @@ export class ItemsComponent implements OnInit {
   }
   
   closeModel(){
-    this.dato = null
+    this.dato = null;
     this.isModelOpen = false;
     this.getAll();
-  }
-
-  listenForEvents(){
-    this.echo.channel('items').listen('ItemCreated', (e: any) => {
-      console.log('Item created', e);
-      this.getAll();
-    });
-
-    this.echo.channel('items').listen('ItemUpdated', (e: any) => {
-      console.log('Item updated', e);
-      this.getAll();
-    });
-
-    this.echo.channel('items').listen('ItemDeleted', (e: any) => {
-      console.log('Item deleted', e);
-      this.getAll();
-    });
   }
 }
