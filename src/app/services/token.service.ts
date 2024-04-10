@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class TokenService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return this.http.get<any>('http://127.0.0.1:8000/api/auth/verifytoken', { headers });
+    return this.http.get<any>(environment.UrlverifyToken, { headers });
   }
 
   logout(): void {

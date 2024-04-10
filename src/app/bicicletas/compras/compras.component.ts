@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { ModelComponent } from '../../shared/ui/model/model.component';
 import { CompraFormComponent } from './compras-form/compra-form/compra-form.component';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment.development';
 import { Router } from '@angular/router';
 
 @Component({
@@ -27,7 +28,7 @@ export class ComprasComponent implements OnInit {
 
   rolUser(){
     
-    this.http.get('http://127.0.0.1:8000/api/auth/roluser', ).subscribe(
+    this.http.get(environment.UrlRolUser, ).subscribe(
       (res: any) => {
         this.roleId = res.role_id;
       },

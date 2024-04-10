@@ -6,6 +6,7 @@ import { IModelo } from '../../shared/models/Modelo';
 import { ModelosService } from '../../services/modelos/modelos.service';
 import { ToastrService } from 'ngx-toastr';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment.development';
 import { Router } from '@angular/router';
 
 @Component({
@@ -31,7 +32,7 @@ export class ModelosComponent implements OnInit {
 
   rolUser(){
     
-    this.http.get('http://127.0.0.1:8000/api/auth/roluser', ).subscribe(
+    this.http.get(environment.UrlRolUser, ).subscribe(
       (res: any) => {
         this.roleId = res.role_id;
       },
