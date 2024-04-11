@@ -35,6 +35,10 @@ export class UsersService {
     return this.http.delete<ApiResponse<IUser>>(`${environment.UrlUser}/${id}`)
   }
 
+  enableUser(id: string): Observable<ApiResponse<IUser>>{
+    return this.http.put<ApiResponse<IUser>>(`${environment.UrlUser}/enable/${id}`, id)
+  }
+
   createGuestUser(): Observable<ApiResponse<IUser>> {
     return this.http.post<ApiResponse<IUser>>(`${environment.UrlInvitado}`, {});
   }

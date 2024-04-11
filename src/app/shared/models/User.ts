@@ -16,4 +16,5 @@ export interface IRole{
     email: string;
     password: string;
     role: IRole;
+    is_active: number;
   }

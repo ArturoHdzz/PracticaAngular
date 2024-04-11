@@ -6,11 +6,12 @@ import { IUser } from '../../shared/models/User';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [ModelComponent, UserFormComponent, CommonModule],
+  imports: [ModelComponent, UserFormComponent, CommonModule, NgIf],
   templateUrl: './users.component.html',
   styleUrl: './users.component.css'
 })
@@ -49,6 +50,21 @@ export class UsersComponent implements OnInit{
         },
         error: (error) => {
           this.toastService.error(error.message);
+        },
+      });
+    }
+  }
+
+  enableUser(id: string) {
+    console.log("Enable user with ID:", id);
+    if (confirm("¿Estás seguro de activar este usuario?")) {
+      this.userService.enableUser(id).subscribe({
+        next: (response) => {
+          //this.toastService.success(response.message);
+          this.getAllUser();
+        },
+        error: (error) => {
+          //this.toastService.error(error.message);
         },
       });
     }
