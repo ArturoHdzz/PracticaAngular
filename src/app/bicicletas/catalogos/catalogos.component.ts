@@ -21,6 +21,7 @@ export class CatalogosComponent implements OnInit{
   catalogos: ICatalogo[]=[];
   catalogo:ICatalogo | null = null;
   roleId: any;
+  showAlert: boolean = false;
 
   constructor(private CatalogoService: CatalogosService, private toastService: ToastrService, private http: HttpClient, private router: Router){
 
@@ -41,9 +42,9 @@ export class CatalogosComponent implements OnInit{
   ngOnInit(): void {
     this.roleId = 3;
     this.rolUser();
+    this.connectToSSE();
     this.getAllCatalogo();
   }
-
 
   getAllCatalogo(){
     this.CatalogoService.getAllCatalogo().subscribe({
@@ -58,12 +59,25 @@ export class CatalogosComponent implements OnInit{
     });
   }
 
+  connectToSSE(): void {
+    const eventSource = new EventSource('http://127.0.0.1:8000/api/sse');
+
+    eventSource.onmessage = (event) => {
+      console.log(event.data);
+
+      if (event.data === "true") {
+        console.log('Se ha actualizado la tabla');
+        this.toastService.success('Se ha actualizado la tabla');
+        this.getAllCatalogo();
+      }
+    };
+  }
+
   deleteUser(id: string) {
     console.log("Deleting user with ID:", id);
     if (confirm("¿Estás seguro de eliminar este usuario?")) {
       this.CatalogoService.deleteCatalogo(id).subscribe({
         next: (response) => {
-          this.toastService.success(response.message);
           this.getAllCatalogo();
         },
         error: (error) => {

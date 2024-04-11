@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ModelComponent } from '../../shared/ui/model/model.component';
 import { CommonModule } from '@angular/common';
 import { ModeloFormComponent } from './modelos-form/modelo-form/modelo-form.component';
@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment.development';
 import { Router } from '@angular/router';
+import { Subscription, interval, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-modelos',
@@ -16,18 +17,48 @@ import { Router } from '@angular/router';
   templateUrl: './modelos.component.html',
   styleUrl: './modelos.component.css'
 })
-export class ModelosComponent implements OnInit {
+export class ModelosComponent implements OnInit, OnDestroy {
   isModelOpen = false;
   datos: IModelo[]=[];
   dato:IModelo | null = null;
   roleId: any;
+  timeInterval: Subscription;
 
-  constructor(private Service: ModelosService, private toastService: ToastrService, private http: HttpClient, private router: Router){}
+  constructor(private Service: ModelosService, private toastService: ToastrService, private http: HttpClient, private router: Router){
+    this.timeInterval = new Subscription();
+  }
 
   ngOnInit(): void {
     this.roleId = 3;
     this.rolUser();
     this.getAll();
+    this.startPolling();
+  }
+
+  ngOnDestroy(): void {
+    this.stopPolling();
+  }
+
+  startPolling() {
+    this.timeInterval = interval(5000)
+      .pipe(
+        switchMap(() => this.Service.getAll())
+      )
+      .subscribe({
+        next: (response) => {
+          this.datos = response.data;
+        },
+        error: (error) => {
+          console.error('Error al obtener modelos:', error);
+          this.stopPolling();
+        }
+      });
+  }
+
+  stopPolling() {
+    if (this.timeInterval) {
+      this.timeInterval.unsubscribe();
+    }
   }
 
   rolUser(){

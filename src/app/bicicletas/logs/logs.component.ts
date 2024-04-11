@@ -24,7 +24,8 @@ export class LogsComponent implements OnInit, OnDestroy{
   }
 
   ngOnInit(): void {
-    this.startPolling();
+    this.getAll();
+    // this.startPolling();
   }
 
   ngOnDestroy(): void {

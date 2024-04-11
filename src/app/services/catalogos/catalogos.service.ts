@@ -9,7 +9,7 @@ import { environment } from '../../../environments/environment.development';
 })
 export class CatalogosService {
 
-  constructor(private http: HttpClient, private zone: NgZone) { }
+  constructor(private http: HttpClient) { }
 
   getAllCatalogo(): Observable<ApiResponse<ICatalogo[]>>{
     return this.http.get<ApiResponse<ICatalogo[]>>(`${environment.UrlCatalogo}`)
@@ -29,27 +29,5 @@ export class CatalogosService {
 
   deleteCatalogo(id: string): Observable<ApiResponse<ICatalogo>>{
     return this.http.delete<ApiResponse<ICatalogo>>(`${environment.UrlCatalogo}/${id}`)
-  }
-
-  getServerSentEvent(url: string): Observable<ICatalogo[]> {
-    return new Observable(observer => {
-      const eventSource = new EventSource(url);
-
-      eventSource.onmessage = event => {
-        this.zone.run(() => {
-          observer.next(JSON.parse(event.data));
-        });
-      };
-
-      eventSource.onerror = error => {
-        this.zone.run(() => {
-          observer.error(error);
-        });
-      };
-
-      return () => {
-        eventSource.close();
-      };
-    });
   }
 }
