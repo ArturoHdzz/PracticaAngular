@@ -55,7 +55,6 @@ export class CatalogoFormComponent implements OnChanges{
 
       request.subscribe({
         next:(response)=> {
-          this.toastService.success(response.message)
           this.nombreError = null;
           this.descripcionError = null;
           this.onClose();
